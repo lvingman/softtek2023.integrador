@@ -7,8 +7,14 @@ namespace TechOil.Controllers
     [ApiController]
     public class UsuarioController : ControllerBase
     {
-        ///>ABMLs
-        ///Listar Servicios
+        //#############
+        //### ABML ####
+        //#############
+        
+        /// <summary>
+        /// Lista Usuarios
+        /// </summary>
+        /// <returns>Lista de todos los usuarios en la API</returns>
         [HttpGet]
         [Route("listado")]
         public IActionResult Listar()
@@ -17,7 +23,11 @@ namespace TechOil.Controllers
         }
         
         
-        ///Buscar Servicio por ID
+        /// <summary>
+        /// Devuelve un usuario
+        /// </summary>
+        /// <param name="id">ID del usuario a buscar</param>
+        /// <returns>Usuario con el ID asignado</returns>
         [HttpGet]
         [Route("busqueda")]
         public IActionResult BuscarPorId(int id)
@@ -31,14 +41,24 @@ namespace TechOil.Controllers
                 return BadRequest("DON'T PANIC");
             }
         }
-        ///Agregar Servicio
+        
+        /// <summary>
+        /// Inserta un usuario en la API
+        /// </summary>
+        /// <param name="usuario">Usuario a insertar</param>
+        /// <returns>Confirmacion de insercion</returns>
         [HttpPost]
         [Route("insertar")]
         public IActionResult Insertar(Usuario usuario)
         {
             return Ok("TBD");
         }
-        ///Baja logica de servicio
+        
+        /// <summary>
+        /// Elimina un usuario de la API
+        /// </summary>
+        /// <param name="id">Id del usuario a eliminar</param>
+        /// <returns>Confirmacion de eliminacion</returns>
         [HttpDelete]
         [Route("eliminar")]
         public IActionResult Eliminar(int id)
@@ -46,7 +66,11 @@ namespace TechOil.Controllers
             return Accepted("RIP");
         }
         
-        ///Modificacion de Servicio
+        /// <summary>
+        /// Modificacion de usuario
+        /// </summary>
+        /// <param name="usuario">Usuario a modificar</param>
+        /// <returns>Confirmacion de </returns>
         [HttpPut]
         [Route("modificar")]
         public IActionResult Modificar(Usuario usuario)

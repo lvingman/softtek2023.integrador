@@ -7,8 +7,14 @@ namespace TechOil.Controllers
     [ApiController]
     public class TrabajoController : ControllerBase
     {
-        ///>ABMLs
-        ///Listar Servicios
+        //#############
+        //### ABML ####
+        //#############
+        
+        /// <summary>
+        /// Lista todos los trabajos
+        /// </summary>
+        /// <returns>Devuelve una lista de todos los trabajos</returns>
         [HttpGet]
         [Route("listado")]
         public IActionResult Listar()
@@ -17,7 +23,11 @@ namespace TechOil.Controllers
         }
         
         
-        ///Buscar Servicio por ID
+        /// <summary>
+        /// Devuelve un trabajo en especifico
+        /// </summary>
+        /// <param name="id">Id del trabajo a buscar</param>
+        /// <returns>Trabajo con el ID especificado</returns>
         [HttpGet]
         [Route("busqueda")]
         public IActionResult BuscarPorId(int id)
@@ -31,14 +41,24 @@ namespace TechOil.Controllers
                 return BadRequest("DON'T PANIC");
             }
         }
-        ///Agregar Servicio
+        
+        /// <summary>
+        /// Inserta un trabajo en la API
+        /// </summary>
+        /// <param name="trabajo">Trabajo a insertar</param>
+        /// <returns>Confirmacion de insercion</returns>
         [HttpPost]
         [Route("insertar")]
         public IActionResult Insertar(Trabajo trabajo)
         {
             return Ok("TBD");
         }
-        ///Baja logica de servicio
+        
+        /// <summary>
+        /// Elimina un trabajo
+        /// </summary>
+        /// <param name="id">ID del trabajo a eliminar</param>
+        /// <returns>Confirmacion de eliminacion</returns>
         [HttpDelete]
         [Route("eliminar")]
         public IActionResult Eliminar(int id)
@@ -46,7 +66,11 @@ namespace TechOil.Controllers
             return Accepted("RIP");
         }
         
-        ///Modificacion de Servicio
+        /// <summary>
+        /// Modifica un trabajo
+        /// </summary>
+        /// <param name="trabajo">Trabajo a modificar</param>
+        /// <returns>Confirmacion de edicion</returns>
         [HttpPut]
         [Route("modificar")]
         public IActionResult Modificar(Trabajo trabajo)
@@ -57,7 +81,7 @@ namespace TechOil.Controllers
             }
             else
             {
-                return BadRequest("No existe ese proyecto");
+                return BadRequest("No existe ese trabajo");
             }
             
         }

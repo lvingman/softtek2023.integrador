@@ -7,8 +7,16 @@ namespace TechOil.Controllers
     [ApiController]
     public class ProyectoController : ControllerBase
     {
-        ///>ABMLs
-        ///Listar Proyectos
+        
+        //#############
+        //### ABML ####
+        //#############
+        
+        
+        /// <summary>
+        /// Lista todos los proyectos
+        /// </summary>
+        /// <returns>Todos los proyectos</returns>
         [HttpGet]
         [Route("listado")]
         public IActionResult Listar()
@@ -17,7 +25,10 @@ namespace TechOil.Controllers
         }
 
 
-        ///Buscar Proyecto por ID
+        /// <summary>
+        /// Busca un proyecto por su id
+        /// </summary>
+        /// <returns>Proyecto con la ID ingresada</returns>
         [HttpGet]
         [Route("busqueda")]
         public IActionResult BuscarPorId(int id)
@@ -32,7 +43,11 @@ namespace TechOil.Controllers
             }
         }
 
-        ///Agregar Proyecto
+        /// <summary>
+        /// Ingresa un proyecto a la base de datos
+        /// </summary>
+        /// <param name="proyecto">Proyecto a modificar</param>
+        /// <returns>Confirmacion de que se ingreso el proyecto con exito</returns>
         [HttpPost]
         [Route("insertar")]
         public IActionResult Insertar(Proyecto proyecto)
@@ -40,7 +55,11 @@ namespace TechOil.Controllers
             return Ok("TBD");
         }
 
-        ///Baja logica de proyecto
+        /// <summary>
+        /// Elimina un proyecto por su ID
+        /// </summary>
+        /// <param name="id">Id del proyecto a eliminar</param>
+        /// <returns>Confirmacion de que se elimino el proyecto</returns>
         [HttpDelete]
         [Route("eliminar")]
         public IActionResult Eliminar(int id)
@@ -48,7 +67,10 @@ namespace TechOil.Controllers
             return Accepted("RIP");
         }
 
-        ///Modificacion de Proyecto
+        /// <summary>
+        /// Modifica un proyecto
+        /// </summary>
+        /// <returns>Confirmacion de que se modifico el proyecto</returns>
         [HttpPut]
         [Route("modificar")]
         public IActionResult Modificar(Proyecto proyecto)

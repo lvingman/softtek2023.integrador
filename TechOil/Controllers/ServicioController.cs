@@ -7,8 +7,15 @@ namespace TechOil.Controllers
     [ApiController]
     public class ServicioController : ControllerBase
     {
-        ///>ABMLs
-        ///Listar Servicios
+        //#############
+        //### ABML ####
+        //#############
+        
+        
+        /// <summary>
+        /// Lista todos los servicios
+        /// </summary>
+        /// <returns>Todos los servicios</returns>
         [HttpGet]
         [Route("listado")]
         public IActionResult Listar()
@@ -17,7 +24,11 @@ namespace TechOil.Controllers
         }
         
         
-        ///Buscar Servicio por ID
+        /// <summary>
+        /// Busca un servicio por ID
+        /// </summary>
+        /// <param name="id"> ID del servicio a buscar</param>
+        /// <returns>Servicio buscado con la ID</returns>
         [HttpGet]
         [Route("busqueda")]
         public IActionResult BuscarPorId(int id)
@@ -31,14 +42,24 @@ namespace TechOil.Controllers
                 return BadRequest("DON'T PANIC");
             }
         }
-        ///Agregar Servicio
+        
+        /// <summary>
+        /// Inserta un servicio en la API
+        /// </summary>
+        /// <param name="servicio">Servicio que se ingresara en la API</param>
+        /// <returns>Confirmacion de que se ingreso el servicio</returns>
         [HttpPost]
         [Route("insertar")]
         public IActionResult Insertar(Servicio servicio)
         {
             return Ok("TBD");
         }
-        ///Baja logica de servicio
+        
+        /// <summary>
+        /// Eliminar un servicio
+        /// </summary>
+        /// <param name="id">Id del servicio a eliminar</param>
+        /// <returns>Confirmacion de eliminacion</returns>
         [HttpDelete]
         [Route("eliminar")]
         public IActionResult Eliminar(int id)
@@ -46,7 +67,11 @@ namespace TechOil.Controllers
             return Accepted("RIP");
         }
         
-        ///Modificacion de Servicio
+        /// <summary>
+        /// Modificacion de servicio
+        /// </summary>
+        /// <param name="servicio">Servicio a modificar</param>
+        /// <returns>Confirmacion de modificacion</returns>
         [HttpPut]
         [Route("modificar")]
         public IActionResult Modificar(Servicio servicio)
@@ -57,7 +82,7 @@ namespace TechOil.Controllers
             }
             else
             {
-                return BadRequest("No existe ese proyecto");
+                return BadRequest("No existe ese servicio");
             }
             
         }

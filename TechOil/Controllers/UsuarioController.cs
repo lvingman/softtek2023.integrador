@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TechOil.Models;
+using TechOil.Services;
 
 namespace TechOil.Controllers
 {
@@ -7,6 +8,14 @@ namespace TechOil.Controllers
     [ApiController]
     public class UsuarioController : ControllerBase
     {
+        //UNIT OF WORK
+        private readonly IUnitOfWork _unitOfWork;
+
+        public UsuarioController(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+        
         //#############
         //### ABML ####
         //#############
@@ -17,9 +26,10 @@ namespace TechOil.Controllers
         /// <returns>Lista de todos los usuarios en la API</returns>
         [HttpGet]
         [Route("listado")]
-        public IActionResult Listar()
+        public async Task<ActionResult<IEnumerable<Usuario>>> Listar()
         {
-            return Ok("A desarrollar");
+            var usuarios = await _unitOfWork.UsuarioRepository.GetAll();
+            return usuarios;
         }
         
         

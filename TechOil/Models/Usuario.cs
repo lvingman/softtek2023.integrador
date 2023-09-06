@@ -8,5 +8,6 @@ public class Usuario
     public int Tipo { get; set; }
     public string Contrasena { get; set; }
     
+    //Todo: Considerar agregar un mail al usuario
     
 }

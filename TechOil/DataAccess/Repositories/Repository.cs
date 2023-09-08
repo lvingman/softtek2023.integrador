@@ -24,9 +24,7 @@ namespace TechOil.DataAccess.Repositories
         //Find by Id
         public virtual async Task<T> FindByID(int id)
         {
-            return null;
-            //TODO: Corregir esto como lo dijo el profe en Slack
-            //return await _context.Set<T>().FirstAsync(x => x.Id == id);
+            return await _context.Set<T>().FindAsync(id);
         }
 
 

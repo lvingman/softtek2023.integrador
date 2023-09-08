@@ -42,16 +42,10 @@ namespace TechOil.Controllers
         /// <returns>Usuario con el ID asignado</returns>
         [HttpGet]
         [Route("busqueda")]
-        public IActionResult BuscarPorId(int id)
+        public async Task<ActionResult<Usuario>> BuscarPorId(int id)
         {
-            if (id == 42)
-            {
-                return Ok("Encontraste el sentido de la vida");
-            }
-            else
-            {
-                return BadRequest("DON'T PANIC");
-            }
+            var busqueda = await _unitOfWork.UsuarioRepository.FindByID(id);
+            return busqueda;
         }
         
         /// <summary>

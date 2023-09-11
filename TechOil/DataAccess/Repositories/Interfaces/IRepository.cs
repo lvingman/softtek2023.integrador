@@ -7,5 +7,9 @@ namespace TechOil.DataAccess.Repositories.Interfaces
 
         public Task<T> FindByID(int id);
 
+        public Task<bool> Insert(T entity);
+
+        public Task<bool> Update(T entity);
+
     }
 }

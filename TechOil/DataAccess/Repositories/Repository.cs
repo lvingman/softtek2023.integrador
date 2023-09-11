@@ -22,14 +22,25 @@ namespace TechOil.DataAccess.Repositories
         }
         
         //Find by Id
-        public virtual async Task<T> FindByID(int id)
+        public virtual async Task<T?> FindByID(int id)
         {
             return await _context.Set<T>().FindAsync(id);
         }
 
+        //Insert data in the DB
+        public virtual async Task<bool> Insert(T entity)
+        {
+            await _context.Set<T>().AddAsync(entity);
+            return true;
+        }
 
-        
-        
+        public virtual async Task<bool> Update(T entity)
+        {
+            throw new NotImplementedException();
+        }
+
+
+
     }
         
 }

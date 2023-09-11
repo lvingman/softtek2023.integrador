@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TechOil.DTO;
 using TechOil.Models;
 using TechOil.Services;
 
@@ -17,6 +18,12 @@ namespace TechOil.Controllers
         {
             _unitOfWork = unitOfWork;
         }
+        
+        //##########################
+        //### CONSTRUCTORES DTO ####
+        //##########################
+
+    
         
         //#############
         //### ABML ####
@@ -54,10 +61,13 @@ namespace TechOil.Controllers
         /// <param name="usuario">Usuario a insertar</param>
         /// <returns>Confirmacion de insercion</returns>
         [HttpPost]
-        [Route("insertar")]
-        public IActionResult Insertar(Usuario usuario)
+        [Route("registrar")]
+        public async Task<ActionResult<Usuario>> RegistrarUsuario(CreateUsuarioDTO dto)
         {
-            return Ok("TBD");
+            var usuario = new Usuario(dto); 
+            await _unitOfWork.UsuarioRepository.Insert(usuario);
+            await _unitOfWork.Complete();
+            return Ok(true);
         }
         
         /// <summary>

@@ -33,7 +33,7 @@ namespace TechOil.DataAccess.Repositories
             await _context.Set<T>().AddAsync(entity);
             return true;
         }
-
+        //Update data in DB
         public virtual async Task<bool> Update(T entity)
         {
             throw new NotImplementedException();

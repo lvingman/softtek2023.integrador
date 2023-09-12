@@ -5,10 +5,25 @@ using TechOil.DTO;
 public class Usuario
 {
     /// <summary>
-    /// Constructor de Usuario con DTO de registro
+    /// Constructor de Usuario con DTO para modificacion
+    /// </summary>
+    /// <param name="dto">Datos nuevos</param>
+    /// <param name="id">ID usuario a modificar</param>
+    public Usuario(UsuarioDTO dto, int id)
+    {
+        Id = id;
+        Nombre = dto.Nombre;
+        Dni = dto.Dni;
+        Tipo = dto.Tipo;
+        Email = dto.Email;
+        Contrasena = dto.Contrasena;
+    }
+
+    /// <summary>
+    /// Constructor de Usuario con DTO para registro
     /// </summary>
     /// <param name="dto">Datos de registro</param>
-    public Usuario(CreateUsuarioDTO dto)
+    public Usuario(UsuarioDTO dto)
     {
         Nombre = dto.Nombre;
         Dni = dto.Dni;

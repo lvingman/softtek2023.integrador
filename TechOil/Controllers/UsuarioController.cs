@@ -34,7 +34,6 @@ namespace TechOil.Controllers
         /// </summary>
         /// <returns>Lista de todos los usuarios en la API</returns>
         [HttpGet]
-        [Route("listado")]
         public async Task<ActionResult<IEnumerable<Usuario>>> Listar()
         {
             var usuarios = await _unitOfWork.UsuarioRepository.GetAll();
@@ -47,9 +46,8 @@ namespace TechOil.Controllers
         /// </summary>
         /// <param name="id">ID del usuario a buscar</param>
         /// <returns>Usuario con el ID asignado</returns>
-        [HttpGet]
-        [Route("busqueda")]
-        public async Task<ActionResult<Usuario>> BuscarPorId(int id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Usuario>> BuscarPorId([FromRoute]int id)
         {
             var busqueda = await _unitOfWork.UsuarioRepository.FindByID(id);
             return busqueda;
@@ -61,8 +59,8 @@ namespace TechOil.Controllers
         /// <param name="usuario">Usuario a insertar</param>
         /// <returns>Confirmacion de insercion</returns>
         [HttpPost]
-        [Route("registrar")]
-        public async Task<ActionResult<Usuario>> RegistrarUsuario(CreateUsuarioDTO dto)
+
+        public async Task<ActionResult<Usuario>> RegistrarUsuario(UsuarioDTO dto)
         {
             var usuario = new Usuario(dto); 
             await _unitOfWork.UsuarioRepository.Insert(usuario);
@@ -71,36 +69,31 @@ namespace TechOil.Controllers
         }
         
         /// <summary>
+        /// Modificacion de usuario
+        /// </summary>
+        /// <param name="usuario">Usuario a modificar</param>
+        /// <returns>Confirmacion de </returns>
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Modificar([FromRoute] int id, UsuarioDTO dto)
+        {
+            var result = await _unitOfWork.UsuarioRepository.Update(new Usuario(dto, id));
+           
+            await _unitOfWork.Complete();
+            return Ok(true);
+
+        }
+
+        /// <summary>
         /// Elimina un usuario de la API
         /// </summary>
         /// <param name="id">Id del usuario a eliminar</param>
         /// <returns>Confirmacion de eliminacion</returns>
         [HttpDelete]
-        [Route("eliminar")]
         public IActionResult Eliminar(int id)
         {
-            return Accepted("RIP");
+            return Accepted("TBD");
         }
         
-        /// <summary>
-        /// Modificacion de usuario
-        /// </summary>
-        /// <param name="usuario">Usuario a modificar</param>
-        /// <returns>Confirmacion de </returns>
-        [HttpPut]
-        [Route("modificar")]
-        public IActionResult Modificar(Usuario usuario)
-        {
-            if (usuario.Id == 13)
-            {
-                return Ok("Modded");
-            }
-            else
-            {
-                return BadRequest("No existe ese proyecto");
-            }
-            
-        }
     }
     
 }

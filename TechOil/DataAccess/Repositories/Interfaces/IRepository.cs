@@ -10,6 +10,7 @@ namespace TechOil.DataAccess.Repositories.Interfaces
         public Task<bool> Insert(T entity);
 
         public Task<bool> Update(T entity);
+        public Task<bool> Delete(int id);
 
     }
 }

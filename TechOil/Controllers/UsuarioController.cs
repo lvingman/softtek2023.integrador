@@ -88,12 +88,17 @@ namespace TechOil.Controllers
         /// </summary>
         /// <param name="id">Id del usuario a eliminar</param>
         /// <returns>Confirmacion de eliminacion</returns>
-        [HttpDelete]
-        public IActionResult Eliminar(int id)
+        [HttpDelete("{id}")]
+
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            return Accepted("TBD");
+            var result = await _unitOfWork.UsuarioRepository.Delete(id);
+
+            await _unitOfWork.Complete();
+            return Ok(true);
         }
-        
+
+
     }
-    
+
 }

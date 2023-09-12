@@ -27,7 +27,18 @@ public class UsuarioRepository : Repository<Usuario>, IUsuarioRepository
         _context.Usuarios.Update(usuario);
         return true;
     }
-    
+
+    public override async Task<bool> Delete(int id)
+    {
+        var user = await _context.Usuarios.Where(x => x.Id == id).FirstOrDefaultAsync();
+        if (user != null)
+        {
+            _context.Usuarios.Remove(user);
+        }
+
+        return true;
+    }
+
     public async Task<Usuario?> AuthenticateCredentials(AutenticacionDTO dto)
     {
         return await _context.Usuarios.SingleOrDefaultAsync

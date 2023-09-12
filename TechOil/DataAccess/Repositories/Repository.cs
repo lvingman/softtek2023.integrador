@@ -38,7 +38,11 @@ namespace TechOil.DataAccess.Repositories
         {
             throw new NotImplementedException();
         }
-
+        //Delete data in DB
+        public virtual Task<bool> Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
 
 
     }

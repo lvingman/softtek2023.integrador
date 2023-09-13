@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using TechOil.Helper;
 using TechOil.Models;
 
 
@@ -14,9 +15,11 @@ namespace TechOil.DataAccess.Seeders
                     Id = 1,
                     Nombre = "rmartin",
                     Dni = 41024562,
-                    Tipo = 1,
-                    Contrasena = "1234",
-                    Email = "test@test.org"
+                    IdRol = 1,
+                    //Encripta la contraseña al generarse
+                    Contrasena = PasswordEncryptHelper.EncryptPassword("1234"),
+                    Email = "test@test.org",
+                    Active = true,
                 }
             );
         }

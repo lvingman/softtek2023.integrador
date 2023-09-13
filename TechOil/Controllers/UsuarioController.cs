@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TechOil.DTO;
+using TechOil.Helper;
 using TechOil.Models;
 using TechOil.Services;
 
@@ -36,7 +37,7 @@ namespace TechOil.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Usuario>>> Listar()
         {
-            var usuarios = await _unitOfWork.UsuarioRepository.GetAll();
+            var usuarios = await _unitOfWork.UsuarioRepository.GetAllActive();
             return usuarios;
         }
         
@@ -62,6 +63,7 @@ namespace TechOil.Controllers
 
         public async Task<ActionResult<Usuario>> RegistrarUsuario(UsuarioDTO dto)
         {
+            PasswordEncryptHelper.EncryptPassword(dto.Contrasena);
             var usuario = new Usuario(dto); 
             await _unitOfWork.UsuarioRepository.Insert(usuario);
             await _unitOfWork.Complete();
@@ -84,15 +86,30 @@ namespace TechOil.Controllers
         }
 
         /// <summary>
-        /// Elimina un usuario de la API
+        /// Elimina un usuario de la API fisicamente
         /// </summary>
         /// <param name="id">Id del usuario a eliminar</param>
-        /// <returns>Confirmacion de eliminacion</returns>
-        [HttpDelete("{id}")]
+        /// <returns>Confirmacion de eliminacion fisica</returns>
+        [HttpDelete("hd/{id}")]
 
-        public async Task<IActionResult> Delete([FromRoute] int id)
+        public async Task<IActionResult> HardDelete([FromRoute] int id)
         {
-            var result = await _unitOfWork.UsuarioRepository.Delete(id);
+            var result = await _unitOfWork.UsuarioRepository.HardDelete(id);
+
+            await _unitOfWork.Complete();
+            return Ok(true);
+        }
+
+        /// <summary>
+        /// Elimina un usuario de la API fisicamente
+        /// </summary>
+        /// <param name="id">Id del usuario a eliminar</param>
+        /// <returns>Confirmacion de eliminacion fisica</returns>
+        [HttpDelete("sd/{id}")]
+
+        public async Task<IActionResult> SoftDelete([FromRoute] int id)
+        {
+            var result = await _unitOfWork.UsuarioRepository.SoftDelete(id);
 
             await _unitOfWork.Complete();
             return Ok(true);

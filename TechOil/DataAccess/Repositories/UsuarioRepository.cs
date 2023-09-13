@@ -3,6 +3,7 @@ using TechOil.Models;
 using TechOil.DataAccess.Repositories;
 using TechOil.DataAccess.Repositories.Interfaces;
 using TechOil.DTO;
+using TechOil.Helper;
 
 namespace TechOil.DataAccess.Repositories;
 
@@ -11,6 +12,13 @@ public class UsuarioRepository : Repository<Usuario>, IUsuarioRepository
     public UsuarioRepository(TechOilDbContext context) : base(context)
     {
         
+    }
+
+
+    public override async Task<List<Usuario>> GetAllActive()
+    {
+        var activeUsers = await _context.Usuarios.Where(x => x.Active == true).ToListAsync();
+        return activeUsers;
     }
 
     public override async Task<bool> Update(Usuario dto)
@@ -22,13 +30,13 @@ public class UsuarioRepository : Repository<Usuario>, IUsuarioRepository
         usuario.Contrasena = dto.Contrasena;
         usuario.Email = dto.Email;
         usuario.Dni = dto.Dni;
-        usuario.Tipo = dto.Tipo;
+        usuario.IdRol = dto.IdRol;
 
         _context.Usuarios.Update(usuario);
         return true;
     }
 
-    public override async Task<bool> Delete(int id)
+    public override async Task<bool> HardDelete(int id)
     {
         var user = await _context.Usuarios.Where(x => x.Id == id).FirstOrDefaultAsync();
         if (user != null)
@@ -38,11 +46,22 @@ public class UsuarioRepository : Repository<Usuario>, IUsuarioRepository
 
         return true;
     }
+    
+    public override async Task<bool> SoftDelete(int id)
+    {
+        var usuario = await _context.Usuarios.FirstOrDefaultAsync(x => x.Id == id);
+        if (usuario == null) { return false; }
+
+        usuario.Active = false;
+
+        _context.Usuarios.Update(usuario);
+        return true;
+    }
 
     public async Task<Usuario?> AuthenticateCredentials(AutenticacionDTO dto)
     {
         return await _context.Usuarios.SingleOrDefaultAsync
-            (x => x.Email == dto.Email && x.Contrasena == dto.Contrasena);
+            (x => x.Email == dto.Email && x.Contrasena == PasswordEncryptHelper.EncryptPassword(dto.Contrasena));
     }
     
 }

@@ -16,7 +16,7 @@ namespace TechOil.DataAccess.Repositories
 
         //Methods
         //List Items
-        public virtual async Task<List<T>> GetAll()
+        public virtual async Task<List<T>> GetAllActive()
         {   
             return await _context.Set<T>().ToListAsync();
         }
@@ -38,8 +38,13 @@ namespace TechOil.DataAccess.Repositories
         {
             throw new NotImplementedException();
         }
-        //Delete data in DB
-        public virtual Task<bool> Delete(int id)
+        //Hard Delete in DB
+        public virtual Task<bool> HardDelete(int id)
+        {
+            throw new NotImplementedException();
+        }
+        //Soft Delete in DB
+        public virtual Task<bool> SoftDelete(int id)
         {
             throw new NotImplementedException();
         }

@@ -6,7 +6,9 @@ namespace TechOil.Services
     public interface IUnitOfWork : IDisposable
     {
        public UsuarioRepository UsuarioRepository { get; }
-        Task<int> Complete();
+       public RolRepository RolRepository { get; }
+
+       Task<int> Complete();
     }
 }
 

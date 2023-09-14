@@ -18,15 +18,13 @@ namespace TechOil.DataAccess
         public DbSet<Servicio> Servicios { get; set; }
         public DbSet<Trabajo> Trabajos { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Rol> Roles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Se especifica la SeedData aca adentro
             var seeders = new List<IEntitySeeder>
             {
-                new RolSeeder(),
-                new UsuarioSeeder(),
+                new UsuarioSeeder()
             };
 
             foreach (var entitySeeder in seeders)

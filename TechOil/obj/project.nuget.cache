@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6IdCQYiXh1CahEqc++6ikmQ2i9XX8SfgtoFuCza9Yg9PhtylZQpVpckr6rMQLQT/PyJQCT90n8v6cuEKaqOzGA==",
+  "dgSpecHash": "3JVZA0sd6Txoi48X7KZi2Ce2LAjA5Phw6qB1zKgmTQEJW06dOA/VTKU14pzX7gzlLwlAcjRe+KhTCGTzzmGmzA==",
   "success": true,
-  "projectFilePath": "/home/martin/RiderProjects/softtek2023.integrador/TechOil/TechOil.csproj",
+  "projectFilePath": "/home/martin/RiderProjects/TechOil/TechOil/TechOil.csproj",
   "expectedPackageFiles": [
     "/home/martin/.nuget/packages/humanizer.core/2.8.26/humanizer.core.2.8.26.nupkg.sha512",
     "/home/martin/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/6.0.21/microsoft.aspnetcore.authentication.jwtbearer.6.0.21.nupkg.sha512",

@@ -2790,11 +2790,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/martin/RiderProjects/softtek2023.integrador/TechOil/TechOil.csproj",
+      "projectUniqueName": "/home/martin/RiderProjects/TechOil/TechOil/TechOil.csproj",
       "projectName": "TechOil",
-      "projectPath": "/home/martin/RiderProjects/softtek2023.integrador/TechOil/TechOil.csproj",
+      "projectPath": "/home/martin/RiderProjects/TechOil/TechOil/TechOil.csproj",
       "packagesPath": "/home/martin/.nuget/packages/",
-      "outputPath": "/home/martin/RiderProjects/softtek2023.integrador/TechOil/obj/",
+      "outputPath": "/home/martin/RiderProjects/TechOil/TechOil/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/martin/.nuget/NuGet/NuGet.Config"

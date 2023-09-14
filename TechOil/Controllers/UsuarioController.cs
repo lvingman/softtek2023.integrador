@@ -59,6 +59,7 @@ namespace TechOil.Controllers
         /// </summary>
         /// <param name="usuario">Usuario a insertar</param>
         /// <returns>Confirmacion de insercion</returns>
+        [Authorize(Policy = "Administrador")]
         [HttpPost]
 
         public async Task<ActionResult<Usuario>> RegistrarUsuario(UsuarioDTO dto)
@@ -74,6 +75,7 @@ namespace TechOil.Controllers
         /// </summary>
         /// <param name="usuario">Usuario a modificar</param>
         /// <returns>Confirmacion de </returns>
+        [Authorize(Policy = "Administrador")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Modificar([FromRoute] int id, UsuarioDTO dto)
         {
@@ -90,7 +92,7 @@ namespace TechOil.Controllers
         /// <param name="id">Id del usuario a eliminar</param>
         /// <returns>Confirmacion de eliminacion fisica</returns>
         [HttpDelete("hd/{id}")]
-
+        [Authorize(Policy = "Administrador")]
         public async Task<IActionResult> HardDelete([FromRoute] int id)
         {
             var result = await _unitOfWork.UsuarioRepository.HardDelete(id);
@@ -104,6 +106,7 @@ namespace TechOil.Controllers
         /// </summary>
         /// <param name="id">Id del usuario a eliminar</param>
         /// <returns>Confirmacion de eliminacion fisica</returns>
+        [Authorize(Policy = "Administrador")]
         [HttpDelete("sd/{id}")]
 
         public async Task<IActionResult> SoftDelete([FromRoute] int id)

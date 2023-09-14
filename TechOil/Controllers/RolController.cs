@@ -30,6 +30,7 @@ namespace TechOil.Controllers
 
 
         //Insert
+        [Authorize(Policy = "Administrador")]
         [HttpPost]
         public async Task<IActionResult> Insert(RolDTO dto)
         {
@@ -41,7 +42,7 @@ namespace TechOil.Controllers
         }
 
         //Update
-        [Authorize(Policy = "Admin")]
+        [Authorize(Policy = "Administrador")]
         [HttpPut("{id}")]
 
         public async Task<IActionResult> Update([FromRoute] int id, RolDTO dto)
@@ -53,6 +54,7 @@ namespace TechOil.Controllers
         }
 
         //Hard delete
+        [Authorize(Policy = "Administrador")]
         [HttpDelete("hd/{id}")]
 
         public async Task<IActionResult> HardDelete([FromRoute] int id)

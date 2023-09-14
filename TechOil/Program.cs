@@ -68,7 +68,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 //Genera autorizacion para funcionalidades especificas para admin
 builder.Services.AddAuthorization(option =>
 {
-    option.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "1"));
+    option.AddPolicy("Administrador", policy => policy.RequireClaim(ClaimTypes.Role, "1"));
 });
 
 //Todo: Agregar Roles tal cual esta en el github de la cursada

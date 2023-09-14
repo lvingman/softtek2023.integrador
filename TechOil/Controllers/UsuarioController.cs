@@ -1,4 +1,7 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TechOil.DTO;
+using TechOil.Helper;
 using TechOil.Models;
 using TechOil.Services;
 
@@ -6,6 +9,7 @@ namespace TechOil.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsuarioController : ControllerBase
     {
         //UNIT OF WORK
@@ -16,6 +20,12 @@ namespace TechOil.Controllers
             _unitOfWork = unitOfWork;
         }
         
+        //##########################
+        //### CONSTRUCTORES DTO ####
+        //##########################
+
+    
+        
         //#############
         //### ABML ####
         //#############
@@ -25,10 +35,9 @@ namespace TechOil.Controllers
         /// </summary>
         /// <returns>Lista de todos los usuarios en la API</returns>
         [HttpGet]
-        [Route("listado")]
         public async Task<ActionResult<IEnumerable<Usuario>>> Listar()
         {
-            var usuarios = await _unitOfWork.UsuarioRepository.GetAll();
+            var usuarios = await _unitOfWork.UsuarioRepository.GetAllActive();
             return usuarios;
         }
         
@@ -38,18 +47,11 @@ namespace TechOil.Controllers
         /// </summary>
         /// <param name="id">ID del usuario a buscar</param>
         /// <returns>Usuario con el ID asignado</returns>
-        [HttpGet]
-        [Route("busqueda")]
-        public IActionResult BuscarPorId(int id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Usuario>> BuscarPorId([FromRoute]int id)
         {
-            if (id == 42)
-            {
-                return Ok("Encontraste el sentido de la vida");
-            }
-            else
-            {
-                return BadRequest("DON'T PANIC");
-            }
+            var busqueda = await _unitOfWork.UsuarioRepository.FindByID(id);
+            return busqueda;
         }
         
         /// <summary>
@@ -57,23 +59,15 @@ namespace TechOil.Controllers
         /// </summary>
         /// <param name="usuario">Usuario a insertar</param>
         /// <returns>Confirmacion de insercion</returns>
+        [Authorize(Policy = "Administrador")]
         [HttpPost]
-        [Route("insertar")]
-        public IActionResult Insertar(Usuario usuario)
+
+        public async Task<ActionResult<Usuario>> RegistrarUsuario(UsuarioDTO dto)
         {
-            return Ok("TBD");
-        }
-        
-        /// <summary>
-        /// Elimina un usuario de la API
-        /// </summary>
-        /// <param name="id">Id del usuario a eliminar</param>
-        /// <returns>Confirmacion de eliminacion</returns>
-        [HttpDelete]
-        [Route("eliminar")]
-        public IActionResult Eliminar(int id)
-        {
-            return Accepted("RIP");
+            var usuario = new Usuario(dto); 
+            await _unitOfWork.UsuarioRepository.Insert(usuario);
+            await _unitOfWork.Complete();
+                return Ok(true);
         }
         
         /// <summary>
@@ -81,20 +75,49 @@ namespace TechOil.Controllers
         /// </summary>
         /// <param name="usuario">Usuario a modificar</param>
         /// <returns>Confirmacion de </returns>
-        [HttpPut]
-        [Route("modificar")]
-        public IActionResult Modificar(Usuario usuario)
+        [Authorize(Policy = "Administrador")]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Modificar([FromRoute] int id, UsuarioDTO dto)
         {
-            if (usuario.Id == 13)
-            {
-                return Ok("Modded");
-            }
-            else
-            {
-                return BadRequest("No existe ese proyecto");
-            }
-            
+            var result = await _unitOfWork.UsuarioRepository.Update(new Usuario(dto, id));
+           
+            await _unitOfWork.Complete();
+            return Ok(true);
+
         }
+
+        /// <summary>
+        /// Elimina un usuario de la API fisicamente
+        /// </summary>
+        /// <param name="id">Id del usuario a eliminar</param>
+        /// <returns>Confirmacion de eliminacion fisica</returns>
+        [HttpDelete("hd/{id}")]
+        [Authorize(Policy = "Administrador")]
+        public async Task<IActionResult> HardDelete([FromRoute] int id)
+        {
+            var result = await _unitOfWork.UsuarioRepository.HardDelete(id);
+
+            await _unitOfWork.Complete();
+            return Ok(true);
+        }
+
+        /// <summary>
+        /// Elimina un usuario de la API fisicamente
+        /// </summary>
+        /// <param name="id">Id del usuario a eliminar</param>
+        /// <returns>Confirmacion de eliminacion fisica</returns>
+        [Authorize(Policy = "Administrador")]
+        [HttpDelete("sd/{id}")]
+
+        public async Task<IActionResult> SoftDelete([FromRoute] int id)
+        {
+            var result = await _unitOfWork.UsuarioRepository.SoftDelete(id);
+
+            await _unitOfWork.Complete();
+            return Ok(true);
+        }
+
+
     }
-    
+
 }

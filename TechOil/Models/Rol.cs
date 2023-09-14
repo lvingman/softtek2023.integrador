@@ -14,6 +14,7 @@ namespace TechOil.Models
         [Column("Active")]
         public bool Active { get; set; }
         
+        //Create
         public Rol(RolDTO dto) 
         {
             Nombre = dto.Nombre;
@@ -21,6 +22,7 @@ namespace TechOil.Models
             Active = true;
         }
         
+        //Update
         public Rol(RolDTO dto, int id)
         {
             Id = id;

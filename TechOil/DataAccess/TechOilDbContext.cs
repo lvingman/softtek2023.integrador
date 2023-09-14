@@ -25,8 +25,8 @@ namespace TechOil.DataAccess
             //Se especifica la SeedData aca adentro
             var seeders = new List<IEntitySeeder>
             {
-                new UsuarioSeeder(),
                 new RolSeeder(),
+                new UsuarioSeeder(),
             };
 
             foreach (var entitySeeder in seeders)

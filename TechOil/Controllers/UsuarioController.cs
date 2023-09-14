@@ -63,11 +63,10 @@ namespace TechOil.Controllers
 
         public async Task<ActionResult<Usuario>> RegistrarUsuario(UsuarioDTO dto)
         {
-            PasswordEncryptHelper.EncryptPassword(dto.Contrasena);
             var usuario = new Usuario(dto); 
             await _unitOfWork.UsuarioRepository.Insert(usuario);
             await _unitOfWork.Complete();
-            return Ok(true);
+                return Ok(true);
         }
         
         /// <summary>

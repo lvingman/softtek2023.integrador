@@ -38,7 +38,8 @@ public class Usuario
         IdRol = dto.IdRol;
         Email = dto.Email;
         Contrasena = PasswordEncryptHelper.EncryptPassword(dto.Contrasena);
-    }
+        Active = true;
+    }   
 
     /// <summary>
     /// Constructor vacio (SIEMPRE SE COLOCA CUANDO SE INGRESA
@@ -58,6 +59,7 @@ public class Usuario
     [Column("Dni", TypeName = "VARCHAR(10)")]
     public int Dni { get; set; }
     [Required]
+    [ForeignKey("Rol")]
     public int IdRol { get; set; }
     public Rol? Rol { get; set; }
     [Required]

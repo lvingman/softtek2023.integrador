@@ -19,6 +19,7 @@ namespace TechOil.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        //List
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Rol>>> GetAllActive()
         {
@@ -28,7 +29,7 @@ namespace TechOil.Controllers
         }
 
 
-
+        //Insert
         [HttpPost]
         public async Task<IActionResult> Insert(RolDTO dto)
         {
@@ -39,6 +40,7 @@ namespace TechOil.Controllers
             return Ok(true);
         }
 
+        //Update
         [Authorize(Policy = "Admin")]
         [HttpPut("{id}")]
 
@@ -50,11 +52,22 @@ namespace TechOil.Controllers
             return Ok(true);
         }
 
+        //Hard delete
         [HttpDelete("hd/{id}")]
 
-        public async Task<IActionResult> Delete([FromRoute] int id)
+        public async Task<IActionResult> HardDelete([FromRoute] int id)
         {
             var result = await _unitOfWork.RolRepository.HardDelete(id);
+
+            await _unitOfWork.Complete();
+            return Ok(true);
+        }
+        
+        //Soft Delete
+        [HttpDelete("sd/{id}")]
+        public async Task<IActionResult> SoftDelete([FromRoute] int id)
+        {
+            var result = await _unitOfWork.RolRepository.SoftDelete(id);
 
             await _unitOfWork.Complete();
             return Ok(true);

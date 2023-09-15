@@ -17,7 +17,7 @@ namespace TechOil.DataAccess.Seeders
                     Dni = 41024562,
                     IdRol = 1,
                     //Encripta la contrase�a al generarse
-                    Contrasena = PasswordEncryptHelper.EncryptPassword("1234"),
+                    Contrasena = PasswordEncryptHelper.EncryptPassword("1234", "test@test.org"),
                     Email = "test@test.org",
                     Active = true,
                 },
@@ -28,7 +28,7 @@ namespace TechOil.DataAccess.Seeders
                     Dni = 41024562,
                     IdRol = 2,
                     //Encripta la contrase�a al generarse
-                    Contrasena = PasswordEncryptHelper.EncryptPassword("2222"),
+                    Contrasena = PasswordEncryptHelper.EncryptPassword("2222", "test2@test.org"),
                     Email = "test2@test.org",
                     Active = true,
                 }

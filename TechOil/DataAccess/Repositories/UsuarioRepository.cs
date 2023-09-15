@@ -60,7 +60,7 @@ public class UsuarioRepository : Repository<Usuario>, IUsuarioRepository
 
     public async Task<Usuario?> AuthenticateCredentials(AutenticacionDTO dto)
     {
-        return await _context.Usuarios.SingleOrDefaultAsync
+        return await _context.Usuarios.Include(x => x.Rol).SingleOrDefaultAsync
             (x => x.Email == dto.Email && x.Contrasena == PasswordEncryptHelper.EncryptPassword(dto.Contrasena, dto.Email));
     }
     

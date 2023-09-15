@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TechOil.DTO;
 using TechOil.Helper;
+using TechOil.Infrastructure;
 using TechOil.Models;
 using TechOil.Services;
 
@@ -54,6 +55,8 @@ namespace TechOil.Controllers
             return busqueda;
         }
         
+        //Todo: Agregar documentacion de swagger para esta funcion
+        
         /// <summary>
         /// Inserta un usuario en la API
         /// </summary>
@@ -64,10 +67,13 @@ namespace TechOil.Controllers
 
         public async Task<ActionResult<Usuario>> RegistrarUsuario(UsuarioDTO dto)
         {
+            //Todo: Agregar funcion para verificar que el usuario no exista
             var usuario = new Usuario(dto); 
             await _unitOfWork.UsuarioRepository.Insert(usuario);
             await _unitOfWork.Complete();
-                return Ok(true);
+
+            return ResponseFactory.CreateSuccessResponse(201, "Usuario registrado con exito");
+
         }
         
         /// <summary>

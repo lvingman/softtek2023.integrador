@@ -71,8 +71,9 @@ namespace TechOil.Controllers
             var usuario = new Usuario(dto); 
             await _unitOfWork.UsuarioRepository.Insert(usuario);
             await _unitOfWork.Complete();
-
-            return ResponseFactory.CreateSuccessResponse(201, "Usuario registrado con exito");
+            return Ok(true);
+            
+            //Todo: Configurar lo siguiente: return ResponseFactory.CreateSuccessResponse(201, "Usuario registrado con exito");
 
         }
         

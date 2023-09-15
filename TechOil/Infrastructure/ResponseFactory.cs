@@ -17,6 +17,8 @@ public static class ResponseFactory
 
     }
     
+    //TODO:  terminar esto
+    /*
     public static IActionResult CreateErrorResponse(int statusCode, string[] errors)
     {
         var response = new ApiErrorResponse()
@@ -24,7 +26,7 @@ public static class ResponseFactory
             Status = statusCode,
             Error = new List<ApiErrorResponse.ResponseError>
         };
-//TODO:  terminar esto
+
         foreach (var error in errors)
         {
             response.Error.Add
@@ -36,7 +38,7 @@ public static class ResponseFactory
         };
 
     }
-    
+    */
     
     
 }

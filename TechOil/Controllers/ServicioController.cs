@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TechOil.DTO;
 using TechOil.Models;
+using TechOil.Services;
 
 namespace TechOil.Controllers
 {
@@ -9,6 +11,14 @@ namespace TechOil.Controllers
     [Authorize]
     public class ServicioController : ControllerBase
     {
+        //UNIT OF WORK
+        private readonly IUnitOfWork _unitOfWork;
+
+        public ServicioController(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+        
         //#############
         //### ABML ####
         //#############
@@ -19,11 +29,12 @@ namespace TechOil.Controllers
         /// </summary>
         /// <returns>Todos los servicios</returns>
         [HttpGet]
-        [Route("listado")]
-        public IActionResult Listar()
+        public async Task<ActionResult<IEnumerable<Servicio>>> Listar()
         {
-            return Ok("A desarrollar");
+            var servicios = await _unitOfWork.ServicioRepository.GetAllActive();
+            return servicios;
         }
+
         
         
         /// <summary>
@@ -31,42 +42,32 @@ namespace TechOil.Controllers
         /// </summary>
         /// <param name="id"> ID del servicio a buscar</param>
         /// <returns>Servicio buscado con la ID</returns>
-        [HttpGet]
-        [Route("busqueda")]
-        public IActionResult BuscarPorId(int id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Servicio>> BuscarPorId([FromRoute]int id)
         {
-            if (id == 42)
-            {
-                return Ok("Encontraste el sentido de la vida");
-            }
-            else
-            {
-                return BadRequest("DON'T PANIC");
-            }
+            var busqueda = await _unitOfWork.ServicioRepository.FindByID(id);
+            return busqueda;
         }
-        
-        /// <summary>
-        /// Inserta un servicio en la API
-        /// </summary>
-        /// <param name="servicio">Servicio que se ingresara en la API</param>
-        /// <returns>Confirmacion de que se ingreso el servicio</returns>
-        [HttpPost]
-        [Route("insertar")]
-        public IActionResult Insertar(Servicio servicio)
-        {
-            return Ok("TBD");
-        }
+
         
         /// <summary>
         /// Eliminar un servicio
         /// </summary>
         /// <param name="id">Id del servicio a eliminar</param>
         /// <returns>Confirmacion de eliminacion</returns>
-        [HttpDelete]
-        [Route("eliminar")]
-        public IActionResult Eliminar(int id)
+        [Authorize(Policy = "Administrador")]
+        [HttpPost]
+
+        public async Task<ActionResult<Usuario>> Registrar(ServicioDTO dto)
         {
-            return Accepted("RIP");
+            //Todo: Agregar funcion para verificar que el servicio no exista
+            var servicio = new Servicio(dto); 
+            await _unitOfWork.ServicioRepository.Insert(servicio);
+            await _unitOfWork.Complete();
+            return Ok(true);
+            
+            //Todo: Configurar lo siguiente: return ResponseFactory.CreateSuccessResponse(201, "Usuario registrado con exito");
+
         }
         
         /// <summary>
@@ -74,19 +75,47 @@ namespace TechOil.Controllers
         /// </summary>
         /// <param name="servicio">Servicio a modificar</param>
         /// <returns>Confirmacion de modificacion</returns>
-        [HttpPut]
-        [Route("modificar")]
-        public IActionResult Modificar(Servicio servicio)
+        [Authorize(Policy = "Administrador")]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Modificar([FromRoute] int id, ServicioDTO dto)
         {
-            if (servicio.Id == 13)
-            {
-                return Ok("Modded");
-            }
-            else
-            {
-                return BadRequest("No existe ese servicio");
-            }
-            
+            var result = await _unitOfWork.ServicioRepository.Update(new Servicio(dto, id));
+           
+            await _unitOfWork.Complete();
+            return Ok(true);
+
+        }
+        
+        
+        /// <summary>
+        /// Elimina un servicio de la API fisicamente
+        /// </summary>
+        /// <param name="id">Id del servicio a eliminar</param>
+        /// <returns>Confirmacion de eliminacion fisica</returns>
+        [HttpDelete("hd/{id}")]
+        [Authorize(Policy = "Administrador")]
+        public async Task<IActionResult> HardDelete([FromRoute] int id)
+        {
+            var result = await _unitOfWork.ServicioRepository.HardDelete(id);
+
+            await _unitOfWork.Complete();
+            return Ok(true);
+        }
+
+        /// <summary>
+        /// Cambia el estado del servicio de activo a no activo
+        /// </summary>
+        /// <param name="id">Id del servicio a desactivar</param>
+        /// <returns>Confirmacion de eliminacion logica</returns>
+        [Authorize(Policy = "Administrador")]
+        [HttpDelete("sd/{id}")]
+
+        public async Task<IActionResult> SoftDelete([FromRoute] int id)
+        {
+            var result = await _unitOfWork.ServicioRepository.SoftDelete(id);
+
+            await _unitOfWork.Complete();
+            return Ok(true);
         }
     }
     

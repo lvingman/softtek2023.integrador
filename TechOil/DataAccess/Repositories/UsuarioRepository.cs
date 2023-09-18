@@ -58,6 +58,12 @@ public class UsuarioRepository : Repository<Usuario>, IUsuarioRepository
         return true;
     }
 
+    //Verifica que no haya un usuario existente en la DB
+    public async Task<bool> ExistingUser(string email)
+    {
+        return await _context.Usuarios.AnyAsync(x => x.Email == email);
+    }
+    
     public async Task<Usuario?> AuthenticateCredentials(AutenticacionDTO dto)
     {
         return await _context.Usuarios.Include(x => x.Rol).SingleOrDefaultAsync

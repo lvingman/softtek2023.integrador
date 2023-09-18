@@ -27,6 +27,7 @@ namespace TechOil.DataAccess
             {
                 new RolSeeder(),
                 new UsuarioSeeder(),
+                new ServicioSeeder()
             };
 
             foreach (var entitySeeder in seeders)

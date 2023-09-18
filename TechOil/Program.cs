@@ -16,6 +16,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
+    /* Documentacion de swagger:
+          c.SwaggerDoc("v1", new OpenApiInfo { Title ="Umsa Softtek", Version = "v1" });
+           
+           var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+           var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+           c.IncludeXmlComments(xmlPath);
+    */
+    
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "Autorizacion JWT",
@@ -71,7 +79,6 @@ builder.Services.AddAuthorization(option =>
     option.AddPolicy("Administrador", policy => policy.RequireClaim(ClaimTypes.Role, "1"));
 });
 
-//Todo: Agregar Roles tal cual esta en el github de la cursada
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

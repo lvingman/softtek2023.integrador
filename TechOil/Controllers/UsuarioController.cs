@@ -39,6 +39,18 @@ namespace TechOil.Controllers
         public async Task<ActionResult<IEnumerable<Usuario>>> Listar()
         {
             var usuarios = await _unitOfWork.UsuarioRepository.GetAllActive();
+            //Paginado
+            int pageToShow = 1;
+            
+            //Decide que pagina se muestra
+            if (Request.Query.ContainsKey("page"))
+            {
+                int.TryParse(Request.Query["page"], out pageToShow);
+            }
+            
+            var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
+            var paginateUsers = PaginateHelper.Paginate(usuarios, pageToShow, url);
+            
             return usuarios;
         }
         
@@ -65,15 +77,15 @@ namespace TechOil.Controllers
         [Authorize(Policy = "Administrador")]
         [HttpPost]
 
-        public async Task<ActionResult<Usuario>> RegistrarUsuario(UsuarioDTO dto)
+        public async Task<IActionResult> RegistrarUsuario(UsuarioDTO dto)
         {
-            //Todo: Agregar funcion para verificar que el usuario no exista
-            var usuario = new Usuario(dto); 
+
+            if (await _unitOfWork.UsuarioRepository.ExistingUser(dto.Email)) return ResponseFactory.CreateErrorResponse(409, $"Ya existe un usuario registrado con el mail:{dto.Email}");
+            var usuario = new Usuario(dto);
             await _unitOfWork.UsuarioRepository.Insert(usuario);
             await _unitOfWork.Complete();
-            return Ok(true);
-            
-            //Todo: Configurar lo siguiente: return ResponseFactory.CreateSuccessResponse(201, "Usuario registrado con exito");
+
+            return ResponseFactory.CreateSuccessResponse(201, "Usuario registrado con exito!");
 
         }
         
@@ -84,13 +96,19 @@ namespace TechOil.Controllers
         /// <returns>Confirmacion de </returns>
         [Authorize(Policy = "Administrador")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Modificar([FromRoute] int id, UsuarioDTO dto)
+        public async Task<IActionResult> Update([FromRoute] int id, UsuarioDTO dto)
         {
             var result = await _unitOfWork.UsuarioRepository.Update(new Usuario(dto, id));
-           
-            await _unitOfWork.Complete();
-            return Ok(true);
 
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "No se pudo eliminar el usuario");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Actualizado");
+            }
         }
 
         /// <summary>
@@ -104,8 +122,16 @@ namespace TechOil.Controllers
         {
             var result = await _unitOfWork.UsuarioRepository.HardDelete(id);
 
-            await _unitOfWork.Complete();
-            return Ok(true);
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "No se pudo eliminar el usuario");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Eliminado");
+            }
+          
         }
 
         /// <summary>
@@ -120,8 +146,16 @@ namespace TechOil.Controllers
         {
             var result = await _unitOfWork.UsuarioRepository.SoftDelete(id);
 
-            await _unitOfWork.Complete();
-            return Ok(true);
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "No se pudo eliminar el usuario");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Eliminado logico concluido con exito!");
+            }
+            
         }
 
 

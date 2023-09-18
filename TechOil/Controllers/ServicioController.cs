@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TechOil.DTO;
+using TechOil.Helper;
+using TechOil.Infrastructure;
 using TechOil.Models;
 using TechOil.Services;
 
@@ -29,10 +31,21 @@ namespace TechOil.Controllers
         /// </summary>
         /// <returns>Todos los servicios</returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Servicio>>> Listar()
+        public async Task<IActionResult> Listar()
         {
             var servicios = await _unitOfWork.ServicioRepository.GetAllActive();
-            return servicios;
+            int pageToShow = 1;
+            
+            //Decide que pagina se muestra
+            if (Request.Query.ContainsKey("page"))
+            {
+                int.TryParse(Request.Query["page"], out pageToShow);
+            }
+            
+            var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
+            var paginateRoles = PaginateHelper.Paginate(servicios, pageToShow, url);
+
+            return ResponseFactory.CreateSuccessResponse(200, pageToShow);
         }
 
         
@@ -43,10 +56,10 @@ namespace TechOil.Controllers
         /// <param name="id"> ID del servicio a buscar</param>
         /// <returns>Servicio buscado con la ID</returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<Servicio>> BuscarPorId([FromRoute]int id)
+        public async Task<IActionResult> BuscarPorId([FromRoute]int id)
         {
             var busqueda = await _unitOfWork.ServicioRepository.FindByID(id);
-            return busqueda;
+            return ResponseFactory.CreateSuccessResponse(200, busqueda);
         }
 
         
@@ -58,15 +71,13 @@ namespace TechOil.Controllers
         [Authorize(Policy = "Administrador")]
         [HttpPost]
 
-        public async Task<ActionResult<Usuario>> Registrar(ServicioDTO dto)
+        public async Task<IActionResult> Registrar(ServicioDTO dto)
         {
-            //Todo: Agregar funcion para verificar que el servicio no exista
+
             var servicio = new Servicio(dto); 
             await _unitOfWork.ServicioRepository.Insert(servicio);
             await _unitOfWork.Complete();
-            return Ok(true);
-            
-            //Todo: Configurar lo siguiente: return ResponseFactory.CreateSuccessResponse(201, "Usuario registrado con exito");
+            return ResponseFactory.CreateSuccessResponse(201, "Servicio registrado con exito!");
 
         }
         
@@ -80,9 +91,15 @@ namespace TechOil.Controllers
         public async Task<IActionResult> Modificar([FromRoute] int id, ServicioDTO dto)
         {
             var result = await _unitOfWork.ServicioRepository.Update(new Servicio(dto, id));
-           
-            await _unitOfWork.Complete();
-            return Ok(true);
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "No se pudo eliminar el servicio");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Actualizado");
+            }
 
         }
         
@@ -97,9 +114,17 @@ namespace TechOil.Controllers
         public async Task<IActionResult> HardDelete([FromRoute] int id)
         {
             var result = await _unitOfWork.ServicioRepository.HardDelete(id);
+            
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "No se pudo eliminar el usuario");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Eliminado");
+            }
 
-            await _unitOfWork.Complete();
-            return Ok(true);
         }
 
         /// <summary>
@@ -114,8 +139,16 @@ namespace TechOil.Controllers
         {
             var result = await _unitOfWork.ServicioRepository.SoftDelete(id);
 
-            await _unitOfWork.Complete();
-            return Ok(true);
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "No se pudo eliminar el usuario");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Eliminado logico concluido con exito!");
+            }
+            
         }
     }
     

@@ -4,6 +4,8 @@ using TechOil.Services;
 using TechOil.DataAccess.Repositories;
 using TechOil.DTO;
 using Microsoft.AspNetCore.Authorization;
+using TechOil.Helper;
+using TechOil.Infrastructure;
 
 namespace TechOil.Controllers
 {
@@ -21,11 +23,23 @@ namespace TechOil.Controllers
 
         //List
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Rol>>> GetAllActive()
+        public async Task<IActionResult> GetAllActive()
         {
-            var Roles = await _unitOfWork.RolRepository.GetAllActive();
+            var roles = await _unitOfWork.RolRepository.GetAllActive();
 
-            return Roles;
+            int pageToShow = 1;
+            
+            //Decide que pagina se muestra
+            if (Request.Query.ContainsKey("page"))
+            {
+                int.TryParse(Request.Query["page"], out pageToShow);
+            }
+            
+            var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
+            var paginateRoles = PaginateHelper.Paginate(roles, pageToShow, url);
+
+
+            return ResponseFactory.CreateSuccessResponse(200, paginateRoles);
         }
 
 

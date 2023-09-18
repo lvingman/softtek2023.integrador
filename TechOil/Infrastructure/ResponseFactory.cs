@@ -17,28 +17,25 @@ public static class ResponseFactory
 
     }
     
-    //TODO:  terminar esto
-    /*
-    public static IActionResult CreateErrorResponse(int statusCode, string[] errors)
+//Este codigo se encarga de devolver respuestas de query (20X y 40X)
+
+    public static IActionResult CreateErrorResponse(int statusCode, params string[] errors)
     {
         var response = new ApiErrorResponse()
         {
             Status = statusCode,
-            Error = new List<ApiErrorResponse.ResponseError>
+            Error = new List<ApiErrorResponse.ResponseError>()
         };
 
         foreach (var error in errors)
         {
-            response.Error.Add
+            response.Error.Add(new ApiErrorResponse.ResponseError() { Error = error });
         }
-        
+
         return new ObjectResult(response)
         {
-            StatusCode = statusCode
+            StatusCode = statusCode,
         };
-
     }
-    */
-    
-    
+
 }

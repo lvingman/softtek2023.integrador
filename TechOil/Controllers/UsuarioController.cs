@@ -36,7 +36,7 @@ namespace TechOil.Controllers
         /// </summary>
         /// <returns>Lista de todos los usuarios en la API</returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Usuario>>> Listar()
+        public async Task<IActionResult> Listar()
         {
             var usuarios = await _unitOfWork.UsuarioRepository.GetAllActive();
             //Paginado
@@ -51,7 +51,7 @@ namespace TechOil.Controllers
             var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
             var paginateUsers = PaginateHelper.Paginate(usuarios, pageToShow, url);
             
-            return usuarios;
+            return ResponseFactory.CreateSuccessResponse(200, paginateUsers);
         }
         
         
@@ -61,10 +61,10 @@ namespace TechOil.Controllers
         /// <param name="id">ID del usuario a buscar</param>
         /// <returns>Usuario con el ID asignado</returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<Usuario>> BuscarPorId([FromRoute]int id)
+        public async Task<IActionResult> BuscarPorId([FromRoute]int id)
         {
             var busqueda = await _unitOfWork.UsuarioRepository.FindByID(id);
-            return busqueda;
+            return ResponseFactory.CreateSuccessResponse(200, busqueda);
         }
         
         //Todo: Agregar documentacion de swagger para esta funcion

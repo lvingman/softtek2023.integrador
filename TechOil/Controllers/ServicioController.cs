@@ -43,9 +43,9 @@ namespace TechOil.Controllers
             }
             
             var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
-            var paginateRoles = PaginateHelper.Paginate(servicios, pageToShow, url);
+            var paginateServices = PaginateHelper.Paginate(servicios, pageToShow, url);
 
-            return ResponseFactory.CreateSuccessResponse(200, pageToShow);
+            return ResponseFactory.CreateSuccessResponse(200, paginateServices);
         }
 
         
@@ -117,7 +117,7 @@ namespace TechOil.Controllers
             
             if (!result)
             {
-                return ResponseFactory.CreateErrorResponse(500, "No se pudo eliminar el usuario");
+                return ResponseFactory.CreateErrorResponse(500, "No se pudo eliminar el servicio");
             }
             else
             {

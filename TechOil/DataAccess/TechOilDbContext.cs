@@ -1,4 +1,5 @@
 
+using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using Microsoft.EntityFrameworkCore;
 using TechOil.DataAccess.Seeders;
 using TechOil.Models;
@@ -27,7 +28,8 @@ namespace TechOil.DataAccess
             {
                 new RolSeeder(),
                 new UsuarioSeeder(),
-                new ServicioSeeder()
+                new ServicioSeeder(),
+                new ProyectoSeeder()
             };
 
             foreach (var entitySeeder in seeders)

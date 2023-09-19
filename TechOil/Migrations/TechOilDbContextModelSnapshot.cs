@@ -30,12 +30,15 @@ namespace TechOil.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Direccion")
                         .IsRequired()
                         .HasColumnType("VARCHAR(200)")
                         .HasColumnName("Direccion");
 
-                    b.Property<int>("Estado")
+                    b.Property<int>("IdEstado")
                         .HasColumnType("int");
 
                     b.Property<string>("Nombre")
@@ -46,6 +49,24 @@ namespace TechOil.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Proyectos");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Active = true,
+                            Direccion = "P. Sherman, Calle Wallaby 42",
+                            IdEstado = 1,
+                            Nombre = "Proyecto 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Active = true,
+                            Direccion = "Avenida Siempre Viva 742",
+                            IdEstado = 2,
+                            Nombre = "Proyecto 2"
+                        });
                 });
 
             modelBuilder.Entity("TechOil.Models.Rol", b =>

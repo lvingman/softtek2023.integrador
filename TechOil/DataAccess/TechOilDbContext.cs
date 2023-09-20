@@ -29,7 +29,8 @@ namespace TechOil.DataAccess
                 new RolSeeder(),
                 new UsuarioSeeder(),
                 new ServicioSeeder(),
-                new ProyectoSeeder()
+                new ProyectoSeeder(),
+                new TrabajoSeeder(),
             };
 
             foreach (var entitySeeder in seeders)

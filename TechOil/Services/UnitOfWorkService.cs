@@ -11,6 +11,7 @@ public class UnitOfWorkService : IUnitOfWork
     public RolRepository RolRepository { get; private set; }
     public ServicioRepository ServicioRepository { get; private set; }
     public ProyectoRepository ProyectoRepository { get; private set; }
+    public TrabajoRepository TrabajoRepository { get; private set; }
 
     public UnitOfWorkService(TechOilDbContext context)
     {
@@ -19,6 +20,7 @@ public class UnitOfWorkService : IUnitOfWork
         RolRepository = new RolRepository(_context);
         ServicioRepository = new ServicioRepository(_context);
         ProyectoRepository = new ProyectoRepository(_context);
+        TrabajoRepository = new TrabajoRepository(_context);
     }
     
     public Task<int> Complete()

@@ -1,4 +1,5 @@
 using TechOil.DataAccess.Repositories;
+using TechOil.Models;
 
 namespace TechOil.Services
 {
@@ -7,6 +8,9 @@ namespace TechOil.Services
     {
        public UsuarioRepository UsuarioRepository { get; }
        public RolRepository RolRepository { get; }
+       public ServicioRepository ServicioRepository { get; }
+       public ProyectoRepository ProyectoRepository { get; }
+       public TrabajoRepository TrabajoRepository { get; }
 
        Task<int> Complete();
     }

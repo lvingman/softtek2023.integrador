@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TechOil.DTO;
 using TechOil.Helper;
+using TechOil.Infrastructure;
 using TechOil.Models;
 using TechOil.Services;
 
@@ -35,10 +36,22 @@ namespace TechOil.Controllers
         /// </summary>
         /// <returns>Lista de todos los usuarios en la API</returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Usuario>>> Listar()
+        public async Task<IActionResult> Listar()
         {
             var usuarios = await _unitOfWork.UsuarioRepository.GetAllActive();
-            return usuarios;
+            //Paginado
+            int pageToShow = 1;
+            
+            //Decide que pagina se muestra
+            if (Request.Query.ContainsKey("page"))
+            {
+                int.TryParse(Request.Query["page"], out pageToShow);
+            }
+            
+            var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
+            var paginateUsers = PaginateHelper.Paginate(usuarios, pageToShow, url);
+            
+            return ResponseFactory.CreateSuccessResponse(200, paginateUsers);
         }
         
         
@@ -48,11 +61,13 @@ namespace TechOil.Controllers
         /// <param name="id">ID del usuario a buscar</param>
         /// <returns>Usuario con el ID asignado</returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<Usuario>> BuscarPorId([FromRoute]int id)
+        public async Task<IActionResult> BuscarPorId([FromRoute]int id)
         {
             var busqueda = await _unitOfWork.UsuarioRepository.FindByID(id);
-            return busqueda;
+            return ResponseFactory.CreateSuccessResponse(200, busqueda);
         }
+        
+        //Todo: Agregar documentacion de swagger para esta funcion
         
         /// <summary>
         /// Inserta un usuario en la API
@@ -62,12 +77,16 @@ namespace TechOil.Controllers
         [Authorize(Policy = "Administrador")]
         [HttpPost]
 
-        public async Task<ActionResult<Usuario>> RegistrarUsuario(UsuarioDTO dto)
+        public async Task<IActionResult> RegistrarUsuario(UsuarioDTO dto)
         {
-            var usuario = new Usuario(dto); 
+
+            if (await _unitOfWork.UsuarioRepository.ExistingUser(dto.Email)) return ResponseFactory.CreateErrorResponse(409, $"Ya existe un usuario registrado con el mail:{dto.Email}");
+            var usuario = new Usuario(dto);
             await _unitOfWork.UsuarioRepository.Insert(usuario);
             await _unitOfWork.Complete();
-                return Ok(true);
+
+            return ResponseFactory.CreateSuccessResponse(201, "Usuario registrado con exito!");
+
         }
         
         /// <summary>
@@ -77,13 +96,19 @@ namespace TechOil.Controllers
         /// <returns>Confirmacion de </returns>
         [Authorize(Policy = "Administrador")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Modificar([FromRoute] int id, UsuarioDTO dto)
+        public async Task<IActionResult> Update([FromRoute] int id, UsuarioDTO dto)
         {
             var result = await _unitOfWork.UsuarioRepository.Update(new Usuario(dto, id));
-           
-            await _unitOfWork.Complete();
-            return Ok(true);
 
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "No se pudo eliminar el usuario");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Actualizado");
+            }
         }
 
         /// <summary>
@@ -97,8 +122,16 @@ namespace TechOil.Controllers
         {
             var result = await _unitOfWork.UsuarioRepository.HardDelete(id);
 
-            await _unitOfWork.Complete();
-            return Ok(true);
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "No se pudo eliminar el usuario");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Eliminado");
+            }
+          
         }
 
         /// <summary>
@@ -113,8 +146,16 @@ namespace TechOil.Controllers
         {
             var result = await _unitOfWork.UsuarioRepository.SoftDelete(id);
 
-            await _unitOfWork.Complete();
-            return Ok(true);
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "No se pudo eliminar el usuario");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Eliminado logico concluido con exito!");
+            }
+            
         }
 
 

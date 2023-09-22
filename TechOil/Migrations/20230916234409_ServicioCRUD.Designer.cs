@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TechOil.DataAccess;
 
@@ -11,9 +12,10 @@ using TechOil.DataAccess;
 namespace TechOil.Migrations
 {
     [DbContext(typeof(TechOilDbContext))]
-    partial class TechOilDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230916234409_ServicioCRUD")]
+    partial class ServicioCRUD
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,15 +32,12 @@ namespace TechOil.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Direccion")
                         .IsRequired()
                         .HasColumnType("VARCHAR(200)")
                         .HasColumnName("Direccion");
 
-                    b.Property<int>("IdEstado")
+                    b.Property<int>("Estado")
                         .HasColumnType("int");
 
                     b.Property<string>("Nombre")
@@ -49,24 +48,6 @@ namespace TechOil.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Proyectos");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Active = true,
-                            Direccion = "P. Sherman, Calle Wallaby 42",
-                            IdEstado = 1,
-                            Nombre = "Proyecto 1"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Active = true,
-                            Direccion = "Avenida Siempre Viva 742",
-                            IdEstado = 2,
-                            Nombre = "Proyecto 2"
-                        });
                 });
 
             modelBuilder.Entity("TechOil.Models.Rol", b =>
@@ -163,20 +144,15 @@ namespace TechOil.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit")
-                        .HasColumnName("Active");
-
                     b.Property<int>("CantidadHoras")
-                        .HasColumnType("int")
-                        .HasColumnName("CantidadHoras");
+                        .HasColumnType("int");
 
                     b.Property<double>("Costo")
-                        .HasColumnType("float")
-                        .HasColumnName("Costo");
+                        .HasColumnType("float");
 
                     b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("Date")
+                        .HasColumnName("Nombre");
 
                     b.Property<int>("IdProyecto")
                         .HasColumnType("int");
@@ -185,40 +161,11 @@ namespace TechOil.Migrations
                         .HasColumnType("int");
 
                     b.Property<double>("ValorHora")
-                        .HasColumnType("float")
-                        .HasColumnName("ValorHora");
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdProyecto");
-
-                    b.HasIndex("IdServicio");
-
                     b.ToTable("Trabajos");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Active = true,
-                            CantidadHoras = 8,
-                            Costo = 3000.0,
-                            Fecha = new DateTime(1998, 3, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdProyecto = 1,
-                            IdServicio = 1,
-                            ValorHora = 12.5
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Active = true,
-                            CantidadHoras = 4,
-                            Costo = 200000.0,
-                            Fecha = new DateTime(2020, 1, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdProyecto = 2,
-                            IdServicio = 2,
-                            ValorHora = 32.549999999999997
-                        });
                 });
 
             modelBuilder.Entity("TechOil.Models.Usuario", b =>
@@ -283,25 +230,6 @@ namespace TechOil.Migrations
                             IdRol = 2,
                             Nombre = "testuser"
                         });
-                });
-
-            modelBuilder.Entity("TechOil.Models.Trabajo", b =>
-                {
-                    b.HasOne("TechOil.Models.Proyecto", "Proyecto")
-                        .WithMany()
-                        .HasForeignKey("IdProyecto")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TechOil.Models.Servicio", "Servicio")
-                        .WithMany()
-                        .HasForeignKey("IdServicio")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Proyecto");
-
-                    b.Navigation("Servicio");
                 });
 
             modelBuilder.Entity("TechOil.Models.Usuario", b =>

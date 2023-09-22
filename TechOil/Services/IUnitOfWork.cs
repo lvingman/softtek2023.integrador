@@ -10,7 +10,7 @@ namespace TechOil.Services
        public RolRepository RolRepository { get; }
        public ServicioRepository ServicioRepository { get; }
        public ProyectoRepository ProyectoRepository { get; }
-       
+       public TrabajoRepository TrabajoRepository { get; }
 
        Task<int> Complete();
     }

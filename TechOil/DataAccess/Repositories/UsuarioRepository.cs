@@ -17,8 +17,14 @@ public class UsuarioRepository : Repository<Usuario>, IUsuarioRepository
 
     public override async Task<List<Usuario>> GetAllActive()
     {
-        var activeUsers = await _context.Usuarios.Where(x => x.Active == true).ToListAsync();
+        var activeUsers = await _context.Usuarios.Include(x => x.Rol).Where(x => x.Active == true).ToListAsync();
         return activeUsers;
+    }
+    
+    public override async Task<Usuario> FindByID(int id)
+    {
+        var busqueda = await _context.Usuarios.Include(x => x.Rol).FirstOrDefaultAsync( x => x.Id == id);
+        return busqueda;
     }
 
     public override async Task<bool> Update(Usuario dto)

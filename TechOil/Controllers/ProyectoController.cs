@@ -20,6 +20,27 @@ namespace TechOil.Controllers
         {
             _unitOfWork = unitOfWork;
         }
+        
+        //### FUNCIONALIDAD CONSIGNA
+        
+        [HttpGet("Estado/{status}")]
+        public async Task<IActionResult> BuscarPorEstado([FromRoute]int status)
+        {
+            var proyectos = await _unitOfWork.ProyectoRepository.FindByStatus(status);
+            //Paginado
+            int pageToShow = 1;
+            
+            //Decide que pagina se muestra
+            if (Request.Query.ContainsKey("page"))
+            {
+                int.TryParse(Request.Query["page"], out pageToShow);
+            }
+            
+            var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
+            var paginateProyects = PaginateHelper.Paginate(proyectos, pageToShow, url);
+            
+            return ResponseFactory.CreateSuccessResponse(200, paginateProyects);
+        }
 
         //#############
         //### ABML ####

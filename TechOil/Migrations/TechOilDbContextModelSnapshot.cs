@@ -163,15 +163,20 @@ namespace TechOil.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit")
+                        .HasColumnName("Active");
+
                     b.Property<int>("CantidadHoras")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("CantidadHoras");
 
                     b.Property<double>("Costo")
-                        .HasColumnType("float");
+                        .HasColumnType("float")
+                        .HasColumnName("Costo");
 
                     b.Property<DateTime>("Fecha")
-                        .HasColumnType("Date")
-                        .HasColumnName("Nombre");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("IdProyecto")
                         .HasColumnType("int");
@@ -180,11 +185,40 @@ namespace TechOil.Migrations
                         .HasColumnType("int");
 
                     b.Property<double>("ValorHora")
-                        .HasColumnType("float");
+                        .HasColumnType("float")
+                        .HasColumnName("ValorHora");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IdProyecto");
+
+                    b.HasIndex("IdServicio");
+
                     b.ToTable("Trabajos");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Active = true,
+                            CantidadHoras = 8,
+                            Costo = 3000.0,
+                            Fecha = new DateTime(1998, 3, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IdProyecto = 1,
+                            IdServicio = 1,
+                            ValorHora = 12.5
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Active = true,
+                            CantidadHoras = 4,
+                            Costo = 200000.0,
+                            Fecha = new DateTime(2020, 1, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IdProyecto = 2,
+                            IdServicio = 2,
+                            ValorHora = 32.549999999999997
+                        });
                 });
 
             modelBuilder.Entity("TechOil.Models.Usuario", b =>
@@ -249,6 +283,25 @@ namespace TechOil.Migrations
                             IdRol = 2,
                             Nombre = "testuser"
                         });
+                });
+
+            modelBuilder.Entity("TechOil.Models.Trabajo", b =>
+                {
+                    b.HasOne("TechOil.Models.Proyecto", "Proyecto")
+                        .WithMany()
+                        .HasForeignKey("IdProyecto")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TechOil.Models.Servicio", "Servicio")
+                        .WithMany()
+                        .HasForeignKey("IdServicio")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Proyecto");
+
+                    b.Navigation("Servicio");
                 });
 
             modelBuilder.Entity("TechOil.Models.Usuario", b =>

@@ -63,11 +63,7 @@ namespace TechOil.Controllers
         }
 
         
-        /// <summary>
-        /// Eliminar un servicio
-        /// </summary>
-        /// <param name="id">Id del servicio a eliminar</param>
-        /// <returns>Confirmacion de eliminacion</returns>
+   
         [Authorize(Policy = "Administrador")]
         [HttpPost]
 
@@ -93,7 +89,7 @@ namespace TechOil.Controllers
             var result = await _unitOfWork.ServicioRepository.Update(new Servicio(dto, id));
             if (!result)
             {
-                return ResponseFactory.CreateErrorResponse(500, "No se pudo eliminar el servicio");
+                return ResponseFactory.CreateErrorResponse(500, "No se pudo modificar el servicio");
             }
             else
             {
@@ -141,7 +137,7 @@ namespace TechOil.Controllers
 
             if (!result)
             {
-                return ResponseFactory.CreateErrorResponse(500, "No se pudo eliminar el usuario");
+                return ResponseFactory.CreateErrorResponse(500, "No se pudo eliminar el servicio");
             }
             else
             {

@@ -11,10 +11,15 @@ public class ProyectoRepository : Repository<Proyecto>, IProyectoRepository
         
     }
 
+    public async Task<List<Proyecto>> FindByStatus(int status)
+    {
+        var activeProyectos = await _context.Proyectos.Where(x => x.IdEstado == status).ToListAsync();
+        return activeProyectos;
+    }
+    
     public override async Task<List<Proyecto>> GetAllActive()
     {
         var activeProyectos = await _context.Proyectos.Where(x => x.Active == true).ToListAsync();
-        
         return activeProyectos;
     }
     

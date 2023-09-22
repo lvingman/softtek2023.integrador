@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace TechOil.Models;
 
 using System.ComponentModel;
@@ -12,23 +14,21 @@ public class Trabajo
     public Trabajo(TrabajoDTO dto, int id)
     {
         Id = id;
-        Fecha = dto.Fecha;
+        Fecha = DateTime.ParseExact(dto.Fecha,"dd/MM/yyyy",CultureInfo.InvariantCulture);
         IdProyecto = dto.IdProyecto;
         IdServicio = dto.IdServicio;
         CantidadHoras = dto.CantidadHoras;
         ValorHora = dto.ValorHora;
-        Costo = dto.Costo;
         Active = true;
     }
 
     public Trabajo(TrabajoDTO dto)
     {
-        Fecha = dto.Fecha;
+        Fecha = DateTime.ParseExact(dto.Fecha,"dd/MM/yyyy",CultureInfo.InvariantCulture);
         IdProyecto = dto.IdProyecto;
         IdServicio = dto.IdServicio;
         CantidadHoras = dto.CantidadHoras;
         ValorHora = dto.ValorHora;
-        Costo = dto.Costo;
         Active = true;
     }
 
@@ -42,9 +42,8 @@ public class Trabajo
     public int Id { get; set; }
 
     [Required]
-    [Column("Nombre", TypeName = "VARCHAR(50)")]
     //ToDo: Cambiar Fecha de String a DateTime/DateOnly (de alguna manera)
-    public string Fecha { get; set; }
+    public DateTime Fecha { get; set; }
     [Required]
     [ForeignKey("Proyecto")]
     public int IdProyecto { get; set; }
@@ -62,7 +61,10 @@ public class Trabajo
     public double ValorHora { get; set; }
     [Required]
     [Column("Costo", TypeName = "float")]
-    public double Costo { get; set; }
+    public double Costo
+    {
+        get { return CantidadHoras * ValorHora;}
+    }
 
     [Column("Active", TypeName = "bit")]
     [DefaultValue(true)]

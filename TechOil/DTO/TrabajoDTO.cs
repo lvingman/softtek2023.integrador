@@ -11,6 +11,5 @@ namespace TechOil.DTO
         public int IdServicio { get; set; }
         public int CantidadHoras { get; set; }
         public double ValorHora { get; set; }
-        public double Costo { get; set; }
     }
 }

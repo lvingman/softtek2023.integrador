@@ -13,9 +13,18 @@ namespace TechOil.DataAccess.Repositories
 
         public override async Task<List<Trabajo>> GetAllActive()
         {
-            var activeJobs = await _context.Trabajos.Where(x => x.Active == true).ToListAsync();
+            var activeJobs = await _context.Trabajos.Include(x => x.Servicio).Include(x => x.Proyecto ).Where(x => x.Active == true).ToListAsync();
             return activeJobs;
         }
+        
+        public override async Task<Trabajo> FindByID(int id)
+        {
+            var busqueda = await _context.Trabajos.Include(x => x.Proyecto).Include(x => x.Servicio).FirstOrDefaultAsync( x => x.Id == id);
+            return busqueda;
+        }
+
+        
+        
 
         //Update no modifica el estado (el estado lo considero como baja logica)
         public override async Task<bool> Update(Trabajo dto)
@@ -28,7 +37,6 @@ namespace TechOil.DataAccess.Repositories
             trabajo.IdServicio = dto.IdServicio;
             trabajo.CantidadHoras = dto.CantidadHoras;
             trabajo.ValorHora = dto.ValorHora;
-            trabajo.Costo = dto.Costo;
 
 
             _context.Trabajos.Update(trabajo);

@@ -21,7 +21,10 @@ namespace TechOil.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //List
+        /// <summary>
+        /// Obtiene listado de todos los roles
+        /// </summary>
+        /// <returns>Listado de roles</returns>
         [HttpGet]
         public async Task<IActionResult> GetAllActive()
         {
@@ -43,7 +46,12 @@ namespace TechOil.Controllers
         }
 
 
-        //Insert
+        /// <summary>
+        /// Registra un rol en la base de datos
+        /// </summary>
+        /// <param name="dto">Datos del rol a registrar</param>
+        /// <returns>Confirmacion de registro</returns>
+        
         [Authorize(Policy = "Administrador")]
         [HttpPost]
         public async Task<IActionResult> Insert(RolDTO dto)
@@ -55,7 +63,13 @@ namespace TechOil.Controllers
             return Ok(true);
         }
 
-        //Update
+        /// <summary>
+        /// Modifica un rol en la base de datos
+        /// </summary>
+        /// <param name="id">Id del rol a modificar</param>
+        /// <param name="dto">Datos del rol a cambiar</param>
+        /// <returns>Confirmacion de modificacion</returns>
+        
         [Authorize(Policy = "Administrador")]
         [HttpPut("{id}")]
 
@@ -67,7 +81,12 @@ namespace TechOil.Controllers
             return Ok(true);
         }
 
-        //Hard delete
+        /// <summary>
+        /// Eliminacion fisica de un rol de la base de datos
+        /// </summary>
+        /// <param name="id">Id de rol a eliminar</param>
+        /// <returns>Confirmacion de eliminacion</returns>
+        
         [Authorize(Policy = "Administrador")]
         [HttpDelete("hd/{id}")]
 
@@ -79,7 +98,11 @@ namespace TechOil.Controllers
             return Ok(true);
         }
         
-        //Soft Delete
+        /// <summary>
+        /// Eliminacion logica de rol de la base de datos
+        /// </summary>
+        /// <param name="id">Id del rol a eliminar</param>
+        /// <returns>Confirmacion de eliminacion</returns>
         [HttpDelete("sd/{id}")]
         public async Task<IActionResult> SoftDelete([FromRoute] int id)
         {

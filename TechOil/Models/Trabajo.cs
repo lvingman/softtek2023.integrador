@@ -9,32 +9,35 @@ using TechOil.DTO;
 
 public class Trabajo
 {
+
     //Constructores
 
     public Trabajo(TrabajoDTO dto, int id)
     {
         Id = id;
-        Fecha = DateTime.ParseExact(dto.Fecha,"dd/MM/yyyy",CultureInfo.InvariantCulture);
+        Fecha = dto.Fecha;
         IdProyecto = dto.IdProyecto;
         IdServicio = dto.IdServicio;
         CantidadHoras = dto.CantidadHoras;
         ValorHora = dto.ValorHora;
+        Costo = dto.ValorHora * dto.CantidadHoras;
         Active = true;
     }
 
     public Trabajo(TrabajoDTO dto)
     {
-        Fecha = DateTime.ParseExact(dto.Fecha,"dd/MM/yyyy",CultureInfo.InvariantCulture);
+        Fecha = dto.Fecha;
         IdProyecto = dto.IdProyecto;
         IdServicio = dto.IdServicio;
         CantidadHoras = dto.CantidadHoras;
         ValorHora = dto.ValorHora;
+        Costo = dto.ValorHora * dto.CantidadHoras;
         Active = true;
     }
 
     public Trabajo()
     {
-
+       
     }
 
 
@@ -42,7 +45,6 @@ public class Trabajo
     public int Id { get; set; }
 
     [Required]
-    //ToDo: Cambiar Fecha de String a DateTime/DateOnly (de alguna manera)
     public DateTime Fecha { get; set; }
     [Required]
     [ForeignKey("Proyecto")]
@@ -56,14 +58,28 @@ public class Trabajo
     [Required]
     [Column("CantidadHoras", TypeName = "int")]
     public int CantidadHoras { get; set; }
-    [Required]
-    [Column("ValorHora", TypeName = "float")]
-    public double ValorHora { get; set; }
+
+    [Required] [Column("ValorHora", TypeName = "float")]
+    private double valorHora;
+
+    public double ValorHora
+    {
+        get { return valorHora; }
+        set
+        {
+            valorHora = value;
+            Costo = CantidadHoras * valorHora;
+        }
+    }
     [Required]
     [Column("Costo", TypeName = "float")]
+    
+    private double costo;
+
     public double Costo
     {
-        get { return CantidadHoras * ValorHora;}
+        get { return costo; }
+        private set { costo = value; }
     }
 
     [Column("Active", TypeName = "bit")]

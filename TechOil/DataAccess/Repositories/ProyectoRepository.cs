@@ -43,9 +43,13 @@ public class ProyectoRepository : Repository<Proyecto>, IProyectoRepository
         if (proyecto != null)
         {
             _context.Proyectos.Remove(proyecto);
+            return true;
+        }
+        else
+        {
+            return false;
         }
 
-        return true;
     }
     
     public override async Task<bool> SoftDelete(int id)

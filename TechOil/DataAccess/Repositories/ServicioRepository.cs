@@ -37,9 +37,13 @@ public class ServicioRepository  : Repository<Servicio>, IServicioRepository
         if (servicio != null)
         {
             _context.Servicios.Remove(servicio);
+            return true;
+        }
+        else
+        {
+            return false;
         }
 
-        return true;
     }
     
     public override async Task<bool> SoftDelete(int id)

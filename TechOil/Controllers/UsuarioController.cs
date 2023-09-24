@@ -64,11 +64,17 @@ namespace TechOil.Controllers
         public async Task<IActionResult> BuscarPorId([FromRoute]int id)
         {
             var busqueda = await _unitOfWork.UsuarioRepository.FindByID(id);
-            return ResponseFactory.CreateSuccessResponse(200, busqueda);
+            if (busqueda is null)
+            {
+                return ResponseFactory.CreateErrorResponse(501, "Usuario inexistente");
+            }
+            else
+            {
+                return ResponseFactory.CreateSuccessResponse(200, busqueda);
+            }
         }
         
-        //Todo: Agregar documentacion de swagger para esta funcion
-        
+      
         /// <summary>
         /// Inserta un usuario en la API
         /// </summary>
@@ -102,7 +108,7 @@ namespace TechOil.Controllers
 
             if (!result)
             {
-                return ResponseFactory.CreateErrorResponse(500, "No se pudo eliminar el usuario");
+                return ResponseFactory.CreateErrorResponse(500, "No se pudo modificar el usuario");
             }
             else
             {
@@ -124,7 +130,7 @@ namespace TechOil.Controllers
 
             if (!result)
             {
-                return ResponseFactory.CreateErrorResponse(500, "No se pudo eliminar el usuario");
+                return ResponseFactory.CreateErrorResponse(501, "Usuario inexistente");
             }
             else
             {
@@ -135,7 +141,7 @@ namespace TechOil.Controllers
         }
 
         /// <summary>
-        /// Elimina un usuario de la API fisicamente
+        /// Realiza una baja logica de un usuario de la API
         /// </summary>
         /// <param name="id">Id del usuario a eliminar</param>
         /// <returns>Confirmacion de eliminacion fisica</returns>

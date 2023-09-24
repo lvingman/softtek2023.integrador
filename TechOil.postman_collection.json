@@ -1,0 +1,2853 @@
+{
+	"info": {
+		"_postman_id": "fd2be526-602c-4e7b-ba53-3aa3c8766069",
+		"name": "TechOil",
+		"description": "Coleccion de requests hacia la API TechOil\n\n---\n\n{A} = Funcionalidades solo permitidas a Admins\n\n---\n\n\\[2**\\] = Request exitosa\n\n\\[4**\\] = Request con fallos del lado del cliente\n\n\\[5**\\] = Request con fallos del lado del servidor\n\n---\n\n(Soft) = Eliminacion logica que hace inaccesible el dato desde el lado del cliente pero persistente del lado del servidor\n\n(Hard) = Eliminacion fisica que hace la recuperacion de un dato desde la base de datos imposible.\n\n---\n\n(Admin) = Usuario con permisos de todas las requests\n\n(Consultor) = Usuario solo con permisos de lectura",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29002262"
+	},
+	"item": [
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Create [201] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nombre\": \"UsuarioAgregado\",\r\n        \"dni\": 77777777,\r\n        \"idRol\": 2,\r\n        \"contrasena\": \"999\",\r\n        \"email\": \"lolo@lala.org\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Usuario/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Usuario",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create [401] {A}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nombre\": \"UsuarioAgregado\",\r\n        \"dni\": 77777777,\r\n        \"idRol\": 2,\r\n        \"contrasena\": \"999\",\r\n        \"email\": \"lolo@lala.org\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Usuario/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Usuario",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create [409] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"rmartin\",\r\n    \"dni\": 41024562,\r\n    \"idRol\": 1,\r\n    \"contrasena\": \"np\",\r\n    \"email\": \"test@test.org\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Usuario/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Usuario",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create [500] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"rmartin\",\r\n    \"dni\": 41024562,\r\n    \"bbb\": 1,\r\n    \"contrasena\": \"np\",\r\n    \"email\": \"500@err.org\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Usuario/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Usuario",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (All) [200 Page_1]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Usuario/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Usuario",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (All) [200 Page_2]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Usuario?page=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Usuario"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (All) [401]",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Usuario/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Usuario",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (By Id) [200]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7071/api/Usuario/2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7071",
+							"path": [
+								"api",
+								"Usuario",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (By Id) [401]",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7071/api/Usuario/2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7071",
+							"path": [
+								"api",
+								"Usuario",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (By Id) [501]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7071/api/Usuario/6",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7071",
+							"path": [
+								"api",
+								"Usuario",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update [200] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nombre\": \"update\",\r\n        \"dni\": 77222333,\r\n        \"idRol\": 1,\r\n        \"contrasena\": \"2211\",\r\n        \"email\": \"up@date.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Usuario/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Usuario",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update [401] {A}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nombre\": \"update\",\r\n        \"dni\": 77222333,\r\n        \"idRol\": 1,\r\n        \"contrasena\": \"2211\",\r\n        \"email\": \"up@date.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Usuario/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Usuario",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update [500 Bad JSON File] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nombre\": \"update\",\r\n        \"dni\": 77222333,\r\n        \"tipo\": 1,\r\n        \"contrasena\": \"2211\",\r\n        \"email\": \"up@date.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Usuario/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Usuario",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update [500 Unexisting User] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nombre\": \"update\",\r\n        \"dni\": 77222333,\r\n        \"tipo\": 1,\r\n        \"contrasena\": \"2211\",\r\n        \"email\": \"up@date.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Usuario/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Usuario",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Soft) [200] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Usuario/sd/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Usuario",
+								"sd",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Soft) [401] {A}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Usuario/sd/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Usuario",
+								"sd",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Soft) [405] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Usuario/sd/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Usuario",
+								"sd",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Soft) [500] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Usuario/sd/5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Usuario",
+								"sd",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Hard) [200] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Usuario/hd/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Usuario",
+								"hd",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Hard) [401] {A}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Usuario/hd/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Usuario",
+								"hd",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Hard) [405] {A}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Usuario/hd/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Usuario",
+								"hd",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Hard) [501] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Usuario/hd/111",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Usuario",
+								"hd",
+								"111"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "CRUD de Usuarios"
+		},
+		{
+			"name": "Roles",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Rol/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Rol",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (All)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Rol/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Rol",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ3ZWJBcGlTdWJqZWN0IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiMSIsImV4cCI6MTY5NDY0MTkxNn0.8bIyG7yRj6FDn0fwfiTg0yKVWQmt_V2MsGdDsK27c_4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Mod\",\r\n    \"descripcion\": \"Lo hace gratis\",\r\n    \"active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7071/api/Rol/3",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7071",
+							"path": [
+								"api",
+								"Rol",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Hard)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ3ZWJBcGlTdWJqZWN0IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiMSIsImV4cCI6MTY5NDY0MTkxNn0.8bIyG7yRj6FDn0fwfiTg0yKVWQmt_V2MsGdDsK27c_4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7071/api/Rol/hd/3",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7071",
+							"path": [
+								"api",
+								"Rol",
+								"hd",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Soft)",
+					"request": {
+						"method": "DELETE",
+						"header": []
+					},
+					"response": []
+				}
+			],
+			"description": "CRUD de Roles"
+		},
+		{
+			"name": "Servicios",
+			"item": [
+				{
+					"name": "Create [201] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"descripcion\": \"Servicio Agregado\",\n    \"estado\": true,\n    \"valorHora\": 77.7\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Servicio/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Servicio",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create [400] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"asdasd\": \"Servicio Agregado\",\n    \"estado\": true,\n    \"valorHora\": 77.7\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Servicio/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Servicio",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create [401] {A}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"descripcion\": \"Servicio Agregado\",\n    \"estado\": true,\n    \"valorHora\": 77.7\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Servicio/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Servicio",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (All) [200 Page_1]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Servicio/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Servicio",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (All) [200 Page_2]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Servicio/?page=2\"",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Servicio",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2\""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (All) [401]",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Servicio/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Servicio",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (By Id) [200]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Servicio/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Servicio",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (By Id) [401]",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Servicio/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Servicio",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (By Id) [501]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Servicio/5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Servicio",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update [200] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"descripcion\": \"Modificado\",\n    \"estado\": true,\n    \"valorHora\": 37.0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Servicio/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Servicio",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update [400] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"test\": \"Modificado\",\n    \"estado\": true,\n    \"valorHora\": 37.0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Servicio/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Servicio",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update [401] {A}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"descripcion\": \"Modificado\",\n    \"estado\": true,\n    \"valorHora\": 37.0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Servicio/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Servicio",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update [500 Unexisting Service] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"descripcion\": \"Modificado\",\n    \"estado\": true,\n    \"valorHora\": 37.0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Servicio/55",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Servicio",
+								"55"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Soft) [200] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Servicio/sd/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Servicio",
+								"sd",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Soft) [401] {A}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Servicio/sd/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Servicio",
+								"sd",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Soft) [405] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Servicio/sd/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Servicio",
+								"sd",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Soft) [500 Unexisting Service] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Servicio/sd/111",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Servicio",
+								"sd",
+								"111"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Hard) [200] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Servicio/hd/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Servicio",
+								"hd",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Hard) [401] {A}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Servicio/hd/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Servicio",
+								"hd",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Hard) [405] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Servicio/hd/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Servicio",
+								"hd",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Hard) [500 Unexisting Service] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Servicio/hd/1111",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Servicio",
+								"hd",
+								"1111"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "CRUD de Servicios"
+		},
+		{
+			"name": "Proyectos",
+			"item": [
+				{
+					"name": "Create [201] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Proyecto Creado\",\n    \"direccion\": \"Boops\",\n    \"idEstado\": 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Proyecto",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Proyecto"
+							]
+						},
+						"description": "Probando"
+					},
+					"response": []
+				},
+				{
+					"name": "Create [400] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Fallo\",\n    \"direccion\": \"Boops\",\n    \"idEstado\": 6\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Proyecto",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Proyecto"
+							]
+						},
+						"description": "Probando"
+					},
+					"response": []
+				},
+				{
+					"name": "Create [401] {A}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Proyecto Creado\",\n    \"direccion\": \"Boops\",\n    \"idEstado\": 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Proyecto",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Proyecto"
+							]
+						},
+						"description": "Probando"
+					},
+					"response": []
+				},
+				{
+					"name": "Read (All) [200 Page_1]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Proyecto",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Proyecto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (All) [200 Page_2]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Proyecto?page=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Proyecto"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (All) [401]",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Proyecto",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Proyecto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (By Id) [200]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Proyecto/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Proyecto",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (By Id) [401]",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Proyecto/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Proyecto",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (By Id) [501]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Proyecto/100",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Proyecto",
+								"100"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (By Status) [200]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Proyecto/Estado/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Proyecto",
+								"Estado",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (By Status) [400 Empty]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Proyecto/Estado/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Proyecto",
+								"Estado",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (By Status) [400 Non-Valid Status]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Proyecto/Estado/0",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Proyecto",
+								"Estado",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (By Status) [401]",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Proyecto/Estado/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Proyecto",
+								"Estado",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update [200] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Proyecto Modificado\",\n    \"direccion\": \"1231313\",\n    \"idEstado\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Proyecto/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Proyecto",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update [400] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Proyecto Modificado\",\n    \"direccion\": \"1231313\",\n    \"idEstado\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Proyecto/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Proyecto",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update [500] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Proyecto Modificado\",\n    \"direccion\": \"1231313\",\n    \"idEstado\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Proyecto/55",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Proyecto",
+								"55"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Soft) [200] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Proyecto/sd/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Proyecto",
+								"sd",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Soft) [401] {A}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Proyecto/sd/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Proyecto",
+								"sd",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Soft) [405] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Proyecto/sd/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Proyecto",
+								"sd",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Soft) [500] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Proyecto/sd/99",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Proyecto",
+								"sd",
+								"99"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Hard) [200] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Proyecto/hd/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Proyecto",
+								"hd",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Hard) [401] {A}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Proyecto/hd/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Proyecto",
+								"hd",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Hard) [405] {A}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Proyecto/hd/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Proyecto",
+								"hd",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Hard) [500] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Proyecto/hd/777",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Proyecto",
+								"hd",
+								"777"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "CRUD de Proyectos"
+		},
+		{
+			"name": "Trabajos",
+			"item": [
+				{
+					"name": "Create [200] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fecha\": \"2001-01-23T00:00:00\",\r\n    \"idProyecto\": 2,\r\n    \"idServicio\": 1,\r\n    \"cantidadHoras\": 6,\r\n    \"valorHora\": 100.000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Trabajo",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Trabajo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create [400] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fecha\": \"01/01/2000\",\r\n    \"idProyecto\": 1,\r\n    \"idServicio\": 2,\r\n    \"cantidadHoras\": 2,\r\n    \"valorHora\": 365.247\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Trabajo",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Trabajo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create [401] {A}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fecha\": \"01/01/2000\",\r\n    \"idProyecto\": 1,\r\n    \"idServicio\": 2,\r\n    \"cantidadHoras\": 2,\r\n    \"valorHora\": 365.247,\r\n    \"costo\": 10000000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Trabajo",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Trabajo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create [500] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fecha\": \"1998-03-12T00:00:00\",\r\n    \"idProyecto\": 5,\r\n    \"idServicio\": 9,\r\n    \"cantidadHoras\": 2,\r\n    \"valorHora\": 365.247\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Trabajo",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Trabajo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (All) [200 Page_1]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Trabajo",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Trabajo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (All) [200 Page_2]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Trabajo?page=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Trabajo"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (All) [401]",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Trabajo",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Trabajo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (By Id) [200]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Trabajo/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Trabajo",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (By Id) [401]",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Trabajo/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Trabajo",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (By Id) [501]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Trabajo/88",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Trabajo",
+								"88"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update [200] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fecha\": \"03/03/2009\",\n    \"idProyecto\": 1,\n    \"idServicio\": 2,\n    \"cantidadHoras\": 10,\n    \"valorHora\": 32500.500\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Trabajo/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Trabajo",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update [401] {A}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Trabajo/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Trabajo",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update [500] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fecha\": \"03/03/2009\",\n    \"idProyecto\": 1,\n    \"idServicio\": 2,\n    \"cantidadHoras\": 10,\n    \"valorHora\": 32500.500\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Trabajo/99",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Trabajo",
+								"99"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Soft) [200] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Trabajo/sd/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Trabajo",
+								"sd",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Soft) [401] {A}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Trabajo/sd/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Trabajo",
+								"sd",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Soft) [405] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Trabajo/sd/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Trabajo",
+								"sd",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Soft) [500] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Trabajo/sd/99",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Trabajo",
+								"sd",
+								"99"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Hard) [200] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Trabajo/hd/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Trabajo",
+								"hd",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Hard) [401] {A}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Trabajo/hd/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Trabajo",
+								"hd",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Hard) [405] {A}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Trabajo/hd/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Trabajo",
+								"hd",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Hard) [500] {A}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Trabajo/hd/99",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Trabajo",
+								"hd",
+								"99"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Crud de Trabajos"
+		},
+		{
+			"name": "Login (Admin) [200]",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"test@test.org\",\r\n    \"contrasena\":\"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/Login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"Login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login (Consultor) [200]",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"test2@test.org\",\r\n    \"contrasena\":\"2222\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/Login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"Login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login [401]",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"te@test.org\",\r\n    \"contrasena\":\"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/Login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"Login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "none",
+			"type": "string"
+		},
+		{
+			"key": "url",
+			"value": "https://localhost:7071/api",
+			"type": "string"
+		}
+	]
+}

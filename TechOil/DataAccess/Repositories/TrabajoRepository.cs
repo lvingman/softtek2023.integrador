@@ -10,7 +10,7 @@ namespace TechOil.DataAccess.Repositories
         {
 
         }
-
+        
         public override async Task<List<Trabajo>> GetAllActive()
         {
             var activeJobs = await _context.Trabajos.Include(x => x.Servicio).Include(x => x.Proyecto ).Where(x => x.Active == true).ToListAsync();
@@ -39,6 +39,7 @@ namespace TechOil.DataAccess.Repositories
             trabajo.ValorHora = dto.ValorHora;
 
 
+
             _context.Trabajos.Update(trabajo);
             return true;
         }
@@ -49,9 +50,13 @@ namespace TechOil.DataAccess.Repositories
             if (trabajo != null)
             {
                 _context.Trabajos.Remove(trabajo);
+                return true;
+            }
+            else
+            {
+                return false;
             }
 
-            return true;
         }
 
         public override async Task<bool> SoftDelete(int id)

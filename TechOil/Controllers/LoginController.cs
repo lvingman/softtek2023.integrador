@@ -20,7 +20,12 @@ public class LoginController : ControllerBase
         _unitOfWork = unitOfWork;
         _tokenJwtHelper = new TokenJwtHelper(configuration);
     }
-
+    
+/// <summary>
+/// Permite a un usuario acceder a las funciones de la API
+/// </summary>
+/// <param name="dto">Datos de inicio de sesion</param>
+/// <returns>Devuelve token para utilizar la API</returns>
     [HttpPost]
     [AllowAnonymous]
     public async Task<IActionResult> Login(AutenticacionDTO dto)

@@ -30,6 +30,7 @@ namespace TechOil.Controllers
         /// Lista todos los servicios
         /// </summary>
         /// <returns>Todos los servicios</returns>
+        
         [HttpGet]
         public async Task<IActionResult> Listar()
         {
@@ -55,15 +56,28 @@ namespace TechOil.Controllers
         /// </summary>
         /// <param name="id"> ID del servicio a buscar</param>
         /// <returns>Servicio buscado con la ID</returns>
+        
         [HttpGet("{id}")]
         public async Task<IActionResult> BuscarPorId([FromRoute]int id)
         {
             var busqueda = await _unitOfWork.ServicioRepository.FindByID(id);
-            return ResponseFactory.CreateSuccessResponse(200, busqueda);
+            if (busqueda is null)
+            {
+                return ResponseFactory.CreateErrorResponse(501, "Servicio inexistente");
+            }
+            else
+            {
+                return ResponseFactory.CreateSuccessResponse(200, busqueda);
+            }
         }
 
         
-   
+       /// <summary>
+       /// Registra un servicio en la base de datos
+       /// </summary>
+       /// <param name="dto">Datos de servicio a registrar</param>
+       /// <returns>Confirmacion de registro de servicio</returns>
+       
         [Authorize(Policy = "Administrador")]
         [HttpPost]
 
@@ -82,6 +96,7 @@ namespace TechOil.Controllers
         /// </summary>
         /// <param name="servicio">Servicio a modificar</param>
         /// <returns>Confirmacion de modificacion</returns>
+        
         [Authorize(Policy = "Administrador")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Modificar([FromRoute] int id, ServicioDTO dto)

@@ -59,7 +59,15 @@ namespace TechOil.Controllers
         public async Task<IActionResult> BuscarPorId([FromRoute] int id)
         {
             var busqueda = await _unitOfWork.TrabajoRepository.FindByID(id);
-            return ResponseFactory.CreateSuccessResponse(200, busqueda);
+            if (busqueda is null)
+            {
+                return ResponseFactory.CreateErrorResponse(501, "Trabajo inexistente");
+            }
+            else
+            {
+                return ResponseFactory.CreateSuccessResponse(200, busqueda);
+            }
+            
         }
 
         /// <summary>
@@ -72,7 +80,7 @@ namespace TechOil.Controllers
 
         public async Task<IActionResult> Registrar(TrabajoDTO dto)
         {
-
+            //Todo: Generar validacion de que se ingresaron los datos de manera correcta
             var trabajo = new Trabajo(dto);
             await _unitOfWork.TrabajoRepository.Insert(trabajo);
             await _unitOfWork.Complete();

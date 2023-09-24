@@ -20,12 +20,23 @@ namespace TechOil.Controllers
         {
             _unitOfWork = unitOfWork;
         }
+
+   
         
         //### FUNCIONALIDAD CONSIGNA
-        
+        /// <summary>
+        /// Permite listar cada proyecto por su estado actual
+        /// </summary>
+        /// <param name="status">Id del tipo de estado de los proyectos a buscar</param>
+        /// <returns>Devuelve listado de proyectos con el estado buscado</returns>
         [HttpGet("Estado/{status}")]
         public async Task<IActionResult> BuscarPorEstado([FromRoute]int status)
         {
+            if (!(Enum.IsDefined(typeof(Estado), status)))
+            {
+                return ResponseFactory.CreateSuccessResponse(400, "Estado no valido");
+            }
+            
             var proyectos = await _unitOfWork.ProyectoRepository.FindByStatus(status);
             //Paginado
             int pageToShow = 1;
@@ -78,7 +89,14 @@ namespace TechOil.Controllers
         public async Task<IActionResult> BuscarPorId([FromRoute]int id)
         {
             var busqueda = await _unitOfWork.ProyectoRepository.FindByID(id);
-            return ResponseFactory.CreateSuccessResponse(200, busqueda);
+            if (busqueda is null)
+            {
+                return ResponseFactory.CreateErrorResponse(501, "Proyecto inexistente");
+            }
+            else
+            {
+                return ResponseFactory.CreateSuccessResponse(200, busqueda);
+            }
         }
 
 
@@ -92,7 +110,10 @@ namespace TechOil.Controllers
 
         public async Task<IActionResult> Registrar(ProyectoDTO dto)
         {
-
+            if (!(Enum.IsDefined(typeof(Estado), dto.IdEstado)))
+            {
+                return ResponseFactory.CreateSuccessResponse(400, "Registro no valido");
+            }
             var proyecto = new Proyecto(dto); 
             await _unitOfWork.ProyectoRepository.Insert(proyecto);
             await _unitOfWork.Complete();
@@ -109,6 +130,7 @@ namespace TechOil.Controllers
         [Authorize(Policy = "Administrador")]
         public async Task<IActionResult> HardDelete([FromRoute] int id)
         {
+            
             var result = await _unitOfWork.ProyectoRepository.HardDelete(id);
             
             if (!result)
@@ -124,9 +146,9 @@ namespace TechOil.Controllers
         }
         
         /// <summary>
-        /// Cambia el estado del servicio de activo a no activo
+        /// Cambia el estado del proyecto de activo a no activo
         /// </summary>
-        /// <param name="id">Id del servicio a desactivar</param>
+        /// <param name="id">Id del proyecto a desactivar</param>
         /// <returns>Confirmacion de eliminacion logica</returns>
         [Authorize(Policy = "Administrador")]
         [HttpDelete("sd/{id}")]
@@ -157,10 +179,14 @@ namespace TechOil.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Modificar([FromRoute] int id, ProyectoDTO dto)
         {
+            if (!(Enum.IsDefined(typeof(Estado), dto.IdEstado)))
+            {
+                return ResponseFactory.CreateSuccessResponse(400, "Modificacion no valida");
+            }
             var result = await _unitOfWork.ProyectoRepository.Update(new Proyecto(dto, id));
             if (!result)
             {
-                return ResponseFactory.CreateErrorResponse(500, "No se pudo eliminar el proyecto");
+                return ResponseFactory.CreateErrorResponse(500, "No se pudo modificar el proyecto");
             }
             else
             {

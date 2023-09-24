@@ -6,7 +6,7 @@ namespace TechOil.DTO
 {
     public class TrabajoDTO
     {
-        public string Fecha { get; set; }
+        public DateTime Fecha { get; set; }
         public int IdProyecto { get; set; }
         public int IdServicio { get; set; }
         public int CantidadHoras { get; set; }

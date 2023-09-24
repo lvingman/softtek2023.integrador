@@ -48,9 +48,11 @@ public class UsuarioRepository : Repository<Usuario>, IUsuarioRepository
         if (user != null)
         {
             _context.Usuarios.Remove(user);
+            return true;
         }
+        else return false;
 
-        return true;
+
     }
     
     public override async Task<bool> SoftDelete(int id)

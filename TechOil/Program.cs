@@ -8,21 +8,27 @@ using TechOil.DataAccess;
 using TechOil.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+var AllowSpecificOrigins = "";
+
+//CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy
+    (
+        name: AllowSpecificOrigins,
+        policy =>
+        {
+            policy.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+        });
+});
 
 // Add services to the container.
-
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    /* Documentacion de swagger:
-          c.SwaggerDoc("v1", new OpenApiInfo { Title ="Umsa Softtek", Version = "v1" });
-           
-           var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-           var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-           c.IncludeXmlComments(xmlPath);
-    */
     
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -47,6 +53,9 @@ builder.Services.AddSwaggerGen(c =>
     });
 
 });
+
+
+
 
 //GENERA MIGRACION
 builder.Services.AddDbContext<TechOilDbContext>(options =>
@@ -93,6 +102,8 @@ app.UseHttpsRedirection();
 //autenticacion antes de autorizacion
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseCors();
 
 app.MapControllers();
 

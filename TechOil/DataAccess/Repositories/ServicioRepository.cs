@@ -48,12 +48,12 @@ public class ServicioRepository  : Repository<Servicio>, IServicioRepository
     
     public override async Task<bool> SoftDelete(int id)
     {
-        var proyecto = await _context.Proyectos.FirstOrDefaultAsync(x => x.Id == id);
-        if (proyecto == null) { return false; }
+        var servicio = await _context.Servicios.FirstOrDefaultAsync(x => x.Id == id);
+        if (servicio == null) { return false; }
 
-        proyecto.Active = false;
+        servicio.Estado = false;
 
-        _context.Proyectos.Update(proyecto);
+        _context.Servicios.Update(servicio);
         return true;
     }
     

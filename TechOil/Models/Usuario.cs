@@ -24,7 +24,7 @@ public class Usuario
         Dni = dto.Dni;
         IdRol = dto.IdRol;
         Email = dto.Email;
-        Contrasena = PasswordEncryptHelper.EncryptPassword(dto.Contrasena);
+        Contrasena = PasswordEncryptHelper.EncryptPassword(dto.Contrasena, dto.Email);
     }
 
     /// <summary>
@@ -37,7 +37,7 @@ public class Usuario
         Dni = dto.Dni;
         IdRol = dto.IdRol;
         Email = dto.Email;
-        Contrasena = PasswordEncryptHelper.EncryptPassword(dto.Contrasena);
+        Contrasena = PasswordEncryptHelper.EncryptPassword(dto.Contrasena, dto.Email);
         Active = true;
     }   
 

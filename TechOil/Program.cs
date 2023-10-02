@@ -103,7 +103,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseCors();
+app.UseCors(AllowSpecificOrigins);
 
 app.MapControllers();
 

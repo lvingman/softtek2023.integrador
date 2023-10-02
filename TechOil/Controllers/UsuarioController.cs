@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using TechOil.DTO;
 using TechOil.Helper;
@@ -38,6 +39,9 @@ namespace TechOil.Controllers
         [HttpGet]
         public async Task<IActionResult> Listar()
         {
+
+
+
             var usuarios = await _unitOfWork.UsuarioRepository.GetAllActive();
             //Paginado
             int pageToShow = 1;
